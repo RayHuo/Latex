@@ -234,10 +234,30 @@ They showed that the task of computing the answer sets of the program can be con
 \headerbox{Splitting Sets}{name=splittingsets,column=2,span=2,row=0,bottomaligned=problem}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \begin{multicols}{2}
-        just hold on
+        A set $U$ of atoms is called a {\em splitting set} of a program $P$, if for each $r \in P$, $head(r) \cap U \neq \emptyset$ implies $\Atom(r) \subseteq U$.
+        \par
+        The {\em bottom} and {\em top} of $P$ \wrt $U$ are denoted as $b_U(P)$  and $t_U(P)$. And they are defined as :
+        $b_U(P)$ = $\set{ r \in P \mid head(r) \cap U \neq \emptyset }$.
+        $t_U(P)$ = $P\setminus b_U(P)$.
+        \par
+        And $e_U(P, X)$ is the set of rules obtained by deleting some rules from $P$ \wrt $U$ and $X$.
 
+        \par
+        A {\em solution} of $P$ \wrt $U$ is a pair $\langle X, Y\rangle$ of sets of atoms \st 
+        $X$ is an answer set of $b_U(P)$, and $Y$ is an answer set of $e_U(P\setminus b_U(P), X)$.
+
+        \smallskip
+        \looseness=-1
+        {\bf Example 2}. Consider the logic program $P_2$:
+        \par
+        $ a \gets \Not d.\ \ d \gets \Not c.\ \ a \gets c, d.\ \ c \gets .$
+        \par
+        $\set{c, d}$ is a splitting set of $P_2$ and the bottom of $P$ \wrt $\set{c,d}$ is $b_{\set{c, d}}(P_2) = \set{ d\gets\Not c.\ \ c\gets.}$. Further more, $e_{\set{c,d}}(P_2\setminus b_{\set{c,d}}(P_2), \set{c}) = \set{ a\gets.}$. And $\langle \set{c}, \set{a}\rangle$ is a solution of $P_2$ \wrt $\set{c,d}$.\\
+
+        \par
+        {\bf Theorem 2 (Splitting Set Theorem)}. Let $U$ be a splitting set of a program $P$. A set $S$ is an answer set of $P$ iff $S = X\cup Y$ for some solution $\langle X, Y\rangle$ of $P$ \wrt $U$.
     \end{multicols}
-    \vspace{-0.6em}
+    \vspace{0.3em}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{A Future Direction}{name=future,column=0,above=bottom}{
@@ -276,7 +296,7 @@ They showed that the task of computing the answer sets of the program can be con
      \vspace{0.3em}
   }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Splitting with arbitrary set for NLP}{name=nlp,column=0,span=2,below=problem,above=future}{
+\headerbox{Splitting with arbitrary set of atoms for NLP}{name=nlp,column=0,span=2,below=problem,above=future}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \smallskip
     \begin{multicols}{2}
@@ -301,9 +321,6 @@ They showed that the task of computing the answer sets of the program can be con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{DLP and Strongly Splitting}{name=dlpsset,column=2,aligned=nlp,bottomaligned=nlp}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%    Lifschitz and Turner introduced the notion of the splitting set and provided a method to split a logic program into the ``bottom'' part and the ``top'' part based on the notion.
-%   They showed that the answer sets of the program can be computed by the {\em solution} of $P$ \wrt $U$ \cite{LifschitzTurner:splitting}.
-
 %    \smallskip
 %    \looseness=-1
     A set $U$ of atoms is called a {\em splitting set} of a program $P$, if for each $r \in P$, $head(r) \cap U \neq \emptyset$ implies $\Atom(r) \subseteq U$.
