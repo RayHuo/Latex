@@ -1,0 +1,374 @@
+\documentclass[landscape,final,a0paper,fontscale=0.285]{baposter}
+
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{bm}
+\usepackage{url}
+
+\usepackage{graphicx}
+\usepackage{multicol}
+
+%\usepackage{times}
+%\usepackage{helvet}
+%\usepackage{bookman}
+\usepackage{palatino}
+
+\usepackage[english]{babel}
+
+\newcommand{\captionfont}{\footnotesize}
+
+\graphicspath{{images/}{../images/}}
+\usetikzlibrary{calc}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}{{\bf Proof:}}{\rule{2mm}{2mm}\\[-.5em] }
+\newtheorem{definition}{Definition}
+
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{\end{enumerate}}
+
+\newenvironment{tight_itemize}{
+\begin{itemize}
+   \setlength{\itemsep}{0pt}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{\end{itemize}}
+
+
+\newcommand{\SET}[1]  {\ensuremath{\mathcal{#1}}}
+\newcommand{\MAT}[1]  {\ensuremath{\boldsymbol{#1}}}
+\newcommand{\VEC}[1]  {\ensuremath{\boldsymbol{#1}}}
+\newcommand{\Video}{\SET{V}}
+\newcommand{\video}{\VEC{f}}
+\newcommand{\track}{x}
+\newcommand{\Track}{\SET T}
+\newcommand{\LMs}{\SET L}
+\newcommand{\lm}{l}
+\newcommand{\PosE}{\SET P}
+\newcommand{\posE}{\VEC p}
+\newcommand{\negE}{\VEC n}
+\newcommand{\NegE}{\SET N}
+\newcommand{\Occluded}{\SET O}
+\newcommand{\occluded}{o}
+
+\newcommand\ie{{\it i.e.}}
+\newcommand\eg{{\it e.g.}}
+\newcommand\st{{\it s.t. }}
+\newcommand\wrt{{\it w.r.t. }}
+
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\Not}{not \,}
+
+\newcommand{\Atom}{Atom\!s}
+\newcommand{\Lit}{Lit}
+
+\newcommand{\LF}{L\!F}
+\newcommand{\EC}{E\!C}
+\newcommand{\ECC}{E\!C\!C}
+\newcommand{\SL}{S\!L}
+\newcommand{\DSL}{D\!S\!L}
+\newcommand{\dsl}{dsl}
+\newcommand{\mS}{S\!S}
+\newcommand{\trn}{tr_n}
+\newcommand{\trp}{tr_p}
+\newcommand{\CS}{C\!S}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Some math symbols used in the text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Multicol Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnsep}{1.5em}
+\setlength{\columnseprule}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Save space in lists. Use this after the opening of the list
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\compresslist}{%
+\setlength{\itemsep}{1pt}%
+\setlength{\parskip}{0pt}%
+\setlength{\parsep}{0pt}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Begin of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Here starts the poster
+%%%---------------------------------------------------------------------------
+%%% Format it to your taste with the options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define some colors
+
+%\definecolor{lightblue}{cmyk}{0.83,0.24,0,0.12}
+\definecolor{lightblue}{rgb}{0.145,0.6666,1}
+
+\hyphenation{resolution occlusions}
+%%
+\begin{poster}%
+  % Poster Options
+  {
+  % Show grid to help with alignment
+  grid=false,
+  % Column spacing
+  colspacing=1em,
+  % Color style
+  bgColorOne=white,
+  bgColorTwo=white,
+  borderColor=lightblue,
+  headerColorOne=black,
+  headerColorTwo=lightblue,
+  headerFontColor=white,
+  boxColorOne=white,
+  boxColorTwo=lightblue,
+  % Format of textbox
+  textborder=roundedleft,
+  % Format of text header
+  eyecatcher=true,
+  headerborder=closed,
+  headerheight=0.1\textheight,
+%  textfont=\sc, An example of changing the text font
+  headershape=roundedright,
+  headershade=shadelr,
+  headerfont=\Large\bf\textsc, %Sans Serif
+  textfont={\setlength{\parindent}{1.5em}},
+  boxshade=plain,
+%  background=shade-tb,
+  background=plain,
+  linewidth=2pt
+  }
+  % Eye Catcher
+  %{\includegraphics[height=5em]{images/graph_occluded.pdf}}
+  {}
+  % Title
+  {\bf \vspace{-.2em}\textsc{Splitting a Logic Program Revisited}\vspace{0.5em}}
+  % Authors
+  {
+  \textsc{Jianmin Ji$^a$, Hai Wan$^{b+}$, Ziwei Huo$^b$, and ZhenFeng Yuan$^b$}\\
+  \vspace{.2em}
+  \large
+  $^a$University of Science and Technology of China, Hefei, China  \!\hspace{1em} $^b$Sun Yat-sen University, Guangzhou, China \!\hspace{1em} $^+$Email: wanhai@mail.sysu.edu.cn
+  }
+  % University logo
+  {% The makebox allows the title to flow into the logo, this is a hack because of the L shaped logo.
+    \includegraphics[height=6.5em]{images/SYSU_USTC}
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Now define the boxes that make up the poster
+%%%---------------------------------------------------------------------------
+%%% Each box has a name and can be placed absolutely or relatively.
+%%% The only inconvenience is that you can only specify a relative position
+%%% towards an already declared box. So if you have a box attached to the
+%%% bottom, one to the top and a third one which should be in between, you
+%%% have to specify the top and bottom boxes before you specify the middle
+%%% box.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    % A coloured circle useful as a bullet with an adjustably strong filling
+    \newcommand{\colouredcircle}{%
+      \tikz{\useasboundingbox (-0.2em,-0.32em) rectangle(0.2em,0.32em); \draw[draw=black,fill=lightblue,line width=0.03em] (0,0) circle(0.18em);}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Problem}{name=problem,column=0,row=0}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    Lifschitz and Turner introduced the notion of the splitting set and provided a method to divide a logic program into two parts.
+They showed that the task of computing the answer sets of the program can be converted into the tasks of computing the answer sets of these parts \cite{LifschitzTurner:splitting}.
+
+    \smallskip
+    \smallskip
+    However, the empty set and the set of all atoms are the only two splitting sets for many programs, then these programs cannot be divided by the splitting method.
+
+   \vspace{0.3em}
+   \vspace{0.3em}
+   \vspace{0.3em}
+   \vspace{0.3em}
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Contributions}{name=contribution, column=1, row=0, bottomaligned=problem}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \looseness=-1
+   we propose a new splitting method that allows the program to be split into two parts by an arbitrary set of atoms, while one of them, the ``top'' part, may introduce some new atoms.
+
+   \smallskip
+   \looseness=-1
+   We show that the task of computing the answer sets of the program can be converted into the tasks of computing the answer sets of these parts.
+
+   \smallskip
+   \looseness=-1
+   The experiments show that, the splitting result in our method is the same as the result in Lifschitz and Turner's splitting method.
+
+
+   \vspace{0.3em}
+
+   \vspace{0.3em}
+
+
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{Splitting Sets}{name=splittingsets,column=2,span=2,row=0,buttomaligned=problem}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{multicols}{2}
+        just hold on
+
+    \end{multicols}
+    \vspace{-0.6em}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{A Future Direction}{name=future,column=0,above=bottom}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   % \begin{multicols}{1}
+        \smallskip
+        \looseness=-1
+        The idea of splitting will find many other uses, for instance in the investigation of incremental ASP solvers and forgetting.
+    %\end{multicols}
+    \vspace{0.3em}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{References}{name=references,column=1,aligned=future,above=bottom}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \smaller
+    \bibliographystyle{ieee}
+    \renewcommand{\section}[2]{\vskip 0.05em}
+      \begin{thebibliography}{1}\itemsep=-0.01em
+      \setlength{\baselineskip}{0.4em}
+      \bibitem{LifschitzTurner:splitting}
+        Lifschitz, V., and Turner, H.
+        \newblock 1994.
+        \newblock {Splitting a logic program.}.
+        \newblock In {\em Proceedings of the 11th International Conference on Logic Programming(ICLP-94)} 23-37.
+      \end{thebibliography}
+    \vspace{0.3em}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Source Code}{name=sourcecode,column=2,span=2,aligned=future,above=bottom}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \smallskip
+      For more information and source code, please visit:
+
+      \smallskip
+      \url{http://ss.sysu.edu.cn/~wh/splitting.html}
+     \vspace{0.3em}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{Splitting with arbitrary set for NLP}{name=nlp,column=0,span=2,row=1,below=results,above=futrue}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \smallskip
+    \begin{multicols}{2}
+        \begin{tikzpicture}[x=1\linewidth,y=-0.58\linewidth]
+            \path (0,0) node{\hspace{-1.8em}\includegraphics[width=1.07\linewidth]{figure2}};
+        \end{tikzpicture}
+
+        \smallskip
+        \looseness=-1
+        By considering the \textit{positive body-head dependency graph} of a program,
+        the method of computing proper loops can be extended and a larger number of loops could be proved to be not proper.
+        We provide an alternative approach.
+
+        \smallskip
+        Intuitively, if we can ``remove'' the vertex $body(r_1)$ or $body(r_2)$ in left figure, then the number of loops would be greatly reduced.
+        Let the left subgraph be a strongly connected subgraph with $n$ number of atoms and the right subgraph a strongly connected subgraph with $m$ number of atoms,
+        after ``removing'',  the number of loops is reduced from $2^{m+n-4} + 2^n+2^m -2$ to $2^n+2^m - 2$.
+
+    \end{multicols}
+    \vspace{0.0em}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{DLP and Strongly Splitting}{name=dlpsset,column=1,bottomaligned=speed}{ % below=problem
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Lifschitz and Turner introduced the notion of the splitting set and provided a method to split a logic program into the ``bottom'' part and the ``top'' part based on the notion.
+%   They showed that the answer sets of the program can be computed by the {\em solution} of $P$ \wrt $U$ \cite{LifschitzTurner:splitting}.
+
+%    \smallskip
+%    \looseness=-1
+    A set $U$ of atoms is called a {\em splitting set} of a program $P$, if for each $r \in P$, $head(r) \cap U \neq \emptyset$ implies $\Atom(r) \subseteq U$.
+    \par
+
+    %The set of rules $r\in P$ \st $head(r)\cap U\neq\emptyset$ is called the {\em bottom} of $P$ \wrt $U$ and denoted by $b_U(P)$.
+    The {\em bottom} and {\em top} of $P$ \wrt $U$ are denoted as $b_U(P)$  and $t_U(P)$. And they are defined as :
+    $b_U(P)$ = $\set{ r \in P \mid head(r) \cap U \neq \emptyset }$.
+    $t_U(P)$ = $P\setminus b_U(P)$.
+    \par
+    And $e_U(P, X)$ is the set of rules obtained by deleting some rules from $P$ \wrt $U$ and $X$.
+
+    \par
+    A {\em solution} of $P$ \wrt $U$ is a pair $\langle X, Y\rangle$ of sets of atoms \st
+    \begin{tight_itemize}
+      \item $X$ is an answer set of $b_U(P)$,
+      \item $Y$ is an answer set of $e_U(P\setminus b_U(P), X)$.
+    \end{tight_itemize}
+
+    \smallskip
+    \looseness=-1
+    {\bf Example 2}. Consider the logic program $P_2$:
+%    \begin{align*}
+     \[   a \gets \Not d.\ \ d \gets \Not c.\ \ a \gets c, d.\ \ c \gets .
+     \]
+%    \end{align*}
+    \par
+    $\set{c, d}$ is a splitting set of $P_2$ and the bottom of $P$ \wrt $\set{c,d}$ is $b_{\set{c, d}}(P_2) = \set{ d\gets\Not c.\ \ c\gets.}$. Further more, $e_{\set{c,d}}(P_2\setminus b_{\set{c,d}}(P_2), \set{c}) = \set{ a\gets.}$. And $\langle \set{c}, \set{a}\rangle$ is a solution of $P_2$ \wrt $\set{c,d}$.
+
+    %\begin{theorem}[Splitting Set Theorem]
+    \par
+    {\bf Theorem 2 (Splitting Set Theorem)}. Let $U$ be a splitting set of a program $P$. A set $S$ is an answer set of $P$ iff $S = X\cup Y$ for some solution $\langle X, Y\rangle$ of $P$ \wrt $U$.
+    %\end{theorem}
+
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Splitting with arbitrary set}{name=,column=1,below=problem,bottomaligned=speed}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    A rule $r$ is called an \textit{external support} of a loop $L$ if
+    $head(r) \in L$ and
+    $L\cap body^+(r) = \emptyset$.
+    Let $R^-(L)$ be the set of external support rules of $L$.
+
+    A loop $L$ of a logic program $P$ is called {\em proper} if there does not exist another loop $L'$ of $P$ s.t.
+    \begin{itemize}
+    \item $L'\subset L$ and $R^-(L')\subseteq R^-(L)$, or
+    \item $R^-(L')\neq\emptyset$ and $R^-(L') \subset R^-(L)$.
+    \end{itemize}
+
+    \smallskip
+    {\bf Proposition 5}.
+    Let $P$ be a logic program and $L$ a loop of $P$. If $L$ is a proper loop of $P$, then $L$ is an elementary loop of~$P$, but not vice versa.
+
+    \smallskip
+    {\bf Example 1 (Continued)}.
+    Program $P_1$ has three proper loops: $\{q\}$,
+    $\{r, q\}$ and $\{p, r, q\}$.
+
+    $\{p, r\}$ and $\{p\}$ are not proper loops as $R^-(\{p, r\}) = \{{p\gets.},\,{r\gets q.}\}$, $R^-(\{p\}) = \{ {p\gets.}, \,$ ${p\gets r.}\}$ and $R^-(\{p, r, q\}) = \{ {p\gets.}\}$.
+
+    $\{r\}$ is not a proper loops as $R^-(\{r\}) = \{ {r\gets p.},\, {r\gets q.}\}$ and $R^-(\{q, r\}) = \{ {r\gets p.}\}$.
+
+   \vspace{0.3em}
+  }
+
+\end{poster}
+
+\end{document}
