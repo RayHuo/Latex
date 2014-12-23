@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.12.21)  23 DEC 2014 11:33
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.12.21)  23 DEC 2014 16:26
 entering extended mode
 **F:/0_Master/0_毕设/0_splitting/AAAI-15*Poster/AAAI-15_poster/AAAI-15*Poster
 .tex
@@ -738,7 +738,7 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 * \footskip=30.0pt
 * \marginparwidth=65.0pt
 * \marginparsep=11.0pt
-* \columnsep=14.99634pt
+* \columnsep=9.99756pt
 * \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
@@ -817,45 +817,76 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 347.
 
-Overfull \hbox (1.01pt too wide) detected at line 364
- []$[]  \OML/cmm/m/it/10 S L[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 P; X\OT1/cmr/m/
-n/10 ) = \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 E \OMS/cmsy/m/n/10 j []$ 
- []
-
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 364.
 
 ("D:\Program Files\CTEX\MiKTeX\tex\latex\psnfss\omsppl.fd"
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 364.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 347.
 
+<images/stable1.png, id=31, 822.07124pt x 408.02437pt>
+File: images/stable1.png Graphic file (type png)
 
-! LaTeX Error: Not in outer par mode.
+<use images/stable1.png>
+Package pdftex.def Info: images/stable1.png used on input line 347.
+(pdftex.def)             Requested size: 200.21582pt x 99.37227pt.
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.364   }
-         
-? 
-! Emergency stop.
- ...                                              
-                                                  
-l.364   }
-         
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Overfull \hbox (1.25667pt too wide) detected at line 369
+ []$[]  \OML/cmm/m/it/10 S S[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 P; X\OT1/cmr/m/
+n/10 ) = \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 E \OMS/cmsy/m/n/10 j \OML/cmm/m/it/
+10 E[];$ 
+ []
 
- 
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Underfull \hbox (badness 6428) in paragraph at lines 396--396
+[]\T1/ppl/m/n/10 We de-fine $\OML/cmm/m/it/10 tr[]\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 P; L\OT1/cmr/m/n/10 )$ \T1/ppl/m/n/10 to be the pro-gram
+ []
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+[2
+
+{D:/Program Files/CTEX/UserData/pdftex/config/pdftex.map{Unicode.sfd}{UGBK.sfd}
+} <F:/0_Master/0_毕设/0_splitting/AAAI-15 Poster/AAAI-15_poster/images/SYSU_U
+STC.pdf> <F:/0_Master/0_毕设/0_splitting/AAAI-15 Poster/AAAI-15_poster/images
+/stable1.png>]
+("F:\0_Master\0_毕设\0_splitting\AAAI-15 Poster\AAAI-15_poster\AAAI-15 Poster
+.aux") ) 
 Here is how much of TeX's memory you used:
- 15541 strings out of 495354
- 312775 string characters out of 3183074
- 358668 words of memory out of 3000000
- 18359 multiletter control sequences out of 15000+200000
- 36098 words of font info for 86 fonts, out of 3000000 for 9000
+ 15805 strings out of 495354
+ 318732 string characters out of 3183074
+ 403776 words of memory out of 3000000
+ 18605 multiletter control sequences out of 15000+200000
+ 44129 words of font info for 99 fonts, out of 3000000 for 9000
  16 hyphenation exceptions out of 8191
- 62i,18n,76p,480b,1016s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 62i,18n,76p,480b,1385s stack positions out of 5000i,500n,10000p,200000b,50000s
+{D:/Program Files/CTEX/MiKTeX/fonts/enc/dvips/fontname/8r.enc}<D:/Progr
+am Files/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program File
+s/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><D:/Program Files/CTEX/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><D:/Program Files/CTEX/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/CTEX/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/CTEX/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmr5.pfb><D:/Program Files/CTEX/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmr7.pfb><D:/Program Files/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.
+pfb><D:/Program Files/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:
+/Program Files/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><D:/Program
+ Files/CTEX/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><D:/Program Files/CTEX/Mi
+KTeX/fonts/type1/urw/palatino/uplb8a.pfb><D:/Program Files/CTEX/MiKTeX/fonts/ty
+pe1/urw/palatino/uplr8a.pfb><D:/Program Files/CTEX/MiKTeX/fonts/type1/urw/palat
+ino/uplri8a.pfb>
+Output written on "AAAI-15 Poster.pdf" (1 page, 473425 bytes).
+PDF statistics:
+ 98 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
+

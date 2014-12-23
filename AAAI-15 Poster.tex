@@ -45,7 +45,7 @@
 
 \newenvironment{tight_itemize}{
 \begin{itemize}
-\setlength{\itemsep}{0pt}%
+  \setlength{\itemsep}{0pt}%
   \setlength{\topsep}{0pt}%
   \setlength{\partopsep}{0pt}%
   \setlength{\parskip}{0pt}%
@@ -98,14 +98,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Multicol Settings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setlength{\columnsep}{1.5em}
+\setlength{\columnsep}{1.0em}
 \setlength{\columnseprule}{0mm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Save space in lists. Use this after the opening of the list
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\compresslist}{%
-\setlength{\itemsep}{1pt}%
+\setlength{\itemsep}{0pt}%
 \setlength{\parskip}{0pt}%
 \setlength{\parsep}{0pt}%
 }
@@ -300,7 +300,7 @@ They showed that the task of computing the answer sets of the program can be con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \smallskip
     \begin{multicols}{2}
-        For extending the splitting set theorem to arbitrary set of atoms for NLP, we introduce some notions. Let $U$, $X$ be sets of atoms, $P$ an NLP. 
+        For extending the splitting set theorem to arbitrary set of atoms for NLP, we introduce some notions. Let $U$, $X$ be sets of atoms, $P$ an NLP.
         \par
         $\EC_U(P)$ and $\ECC_U(P, X)$ are set of rules based on $\Atom(b_U(P))\setminus U$.
         \par
@@ -329,35 +329,18 @@ They showed that the task of computing the answer sets of the program can be con
           \item $Y$ is an answer set of $e_U(t_U(P, X), X)\cup \ECC_U(P, X)$.
         \end{tight_itemize}
 
-        \par
+
         {\bf Theorem 3 }. Let $P$ be an NLP and $U$ a set of atoms. A set $S$ is an answer set of $P$ iff $S = (X\cup Y)\cap \Atom(P)$ for some solution $\langle X, Y\rangle$ of $P$ \wrt~$U$.
-        
-        \par
-        
-        \begin{table}[htb]
-        \vspace{-7.5pt}
-        \caption{Comparing two ways of computing an answer set} %\label{tab:1}
-        \centering
-        {\small
-        \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        Problem & whole & bottom & top & bottom+top \\
-        \hline
-        2-10 & 0.03 & 0.01 & 0.02 & 0.03\\
-        2-15 & 0.53 & 0.03 & 0.16 & 0.19\\
-        2-20 & 1.84 & 0.03 & 0.68 & 0.71\\
-        2-25 & 5.56 & 0.07 & 2.25 & 2.31\\
-        2-30 & 14.07 & 0.15 & 5.66 & 5.81\\
-        2-35 & 27.16 & 0.23 & 12.61 & 12.83\\
-        2-40 & 52.53 & 0.32 & 23.61 & 23.93\\
-        2-45 & 106.93 & 0.59 & 48.73 & 49.32\\
-        2-50 & 171.94 & 0.75 & 80.95 & 81.70\\
-        \hline
-        \end{tabular}}
-        \vspace{-8pt}
-        \end{table}
 
 
+        \smallskip
+        \looseness=-1
+        We try Hamiltonian Circuit (HC) problem in our experiment. The numbers under ``whole'' refer to the running times (in seconds) of clasp for the whole programs.
+        \smallskip
+        \center
+        \begin{tikzpicture}[x=1\linewidth,y=-0.58\linewidth]
+            \path (0,0) node{\hspace{0.1em}\includegraphics[width=.9\linewidth]{stable1}};
+        \end{tikzpicture}
 
     \end{multicols}
     \vspace{0.0em}
@@ -365,68 +348,50 @@ They showed that the task of computing the answer sets of the program can be con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{DLP and Strongly Splitting}{name=dlpsset,column=2,aligned=nlp,bottomaligned=nlp}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%    \smallskip
-%    \looseness=-1
-    A set $U$ of atoms is called a {\em splitting set} of a program $P$, if for each $r \in P$, $head(r) \cap U \neq \emptyset$ implies $\Atom(r) \subseteq U$.
-    \par
-
-    %The set of rules $r\in P$ \st $head(r)\cap U\neq\emptyset$ is called the {\em bottom} of $P$ \wrt $U$ and denoted by $b_U(P)$.
-    The {\em bottom} and {\em top} of $P$ \wrt $U$ are denoted as $b_U(P)$  and $t_U(P)$. And they are defined as :
-    $b_U(P)$ = $\set{ r \in P \mid head(r) \cap U \neq \emptyset }$.
-    $t_U(P)$ = $P\setminus b_U(P)$.
-    \par
-    And $e_U(P, X)$ is the set of rules obtained by deleting some rules from $P$ \wrt $U$ and $X$.
-
-    \par
-    A {\em solution} of $P$ \wrt $U$ is a pair $\langle X, Y\rangle$ of sets of atoms \st
+    We extend the splitting method to DLPs. All the notions are defined the same except for
+    the {\em top} of a DLP $P$ \wrt $U$ under $X$, denoted by $t_U(P, X)$. It is the union of following set of rules:
     \begin{tight_itemize}
-      \item $X$ is an answer set of $b_U(P)$,
-      \item $Y$ is an answer set of $e_U(P\setminus b_U(P), X)$.
+      \item $P\setminus (b_U(P)\cup out_U(P))$,
+      \item $\{\{x_E\}\cup head(r)\setminus E\gets body(r) \mid r\in in_U(P) \text{ and } r\in R^-(E,P, X)\}$, for each $E\in \SL_U(P, X)$,
+      \item $\{\, head(r)\gets x_{E_1}, \ldots, x_{E_t}, body(r)\mid r\in out_U(P),$ for all possible $E_i\in \SL_U(P, X)$ $(1\leq i\leq t)$ \st $body^+(r)\cap E_i\neq\emptyset\,\}$,
     \end{tight_itemize}
+%    where $x_E$'s are new atoms \wrt $E\in \SL_U(P, X)$.\\
 
-    \smallskip
+    \par
+    For any program $P'$ that does not contain atoms in $U$, the answer sets of $P\cup P'$ can be computed from the answer sets of $b_U(P)$ and a program constructed from $(P\setminus b_U(P))\cup P'$.
+    However, the property does not hold for arbitrary sets of atoms in our splitting method. We introduce the {\em strong splitting method} to solve the problem.
     \looseness=-1
-    {\bf Example 2}. Consider the logic program $P_2$:
-%    \begin{align*}
-     \[   a \gets \Not d.\ \ d \gets \Not c.\ \ a \gets c, d.\ \ c \gets .
-     \]
-%    \end{align*}
-    \par
-    $\set{c, d}$ is a splitting set of $P_2$ and the bottom of $P$ \wrt $\set{c,d}$ is $b_{\set{c, d}}(P_2) = \set{ d\gets\Not c.\ \ c\gets.}$. Further more, $e_{\set{c,d}}(P_2\setminus b_{\set{c,d}}(P_2), \set{c}) = \set{ a\gets.}$. And $\langle \set{c}, \set{a}\rangle$ is a solution of $P_2$ \wrt $\set{c,d}$.
-
-    %\begin{theorem}[Splitting Set Theorem]
-    \par
-    {\bf Theorem 2 (Splitting Set Theorem)}. Let $U$ be a splitting set of a program $P$. A set $S$ is an answer set of $P$ iff $S = X\cup Y$ for some solution $\langle X, Y\rangle$ of $P$ \wrt $U$.
-    %\end{theorem}
-
+    {\em Strong splitting method} only replaces $SL_U(P, X)$ to $SS_U(P, X)$ with all the other notions remaining the same.
+    And, we denote %$SS_U(P,X)$ which is similar to $SL_U(P,X)$ with replacing the E as nonempty subset of $U$ instead of semi-loop. 
+    \begin{multline*}
+    \mS_U(P, X) = \{ E \mid E \text{ is a nonempty subset of $U$},\\ E\subseteq X \text{ and } R^-(E, P, X)\subseteq in_U(P)\}.
+    \end{multline*}
   }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \headerbox{Program Simplification}{name=programsimply,column=3,aligned=nlp,bottomaligned=nlp}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    A rule $r$ is called an \textit{external support} of a loop $L$ if
-    $head(r) \in L$ and
-    $L\cap body^+(r) = \emptyset$.
-    Let $R^-(L)$ be the set of external support rules of $L$.
-
-    A loop $L$ of a logic program $P$ is called {\em proper} if there does not exist another loop $L'$ of $P$ s.t.
-    \begin{itemize}
-    \item $L'\subset L$ and $R^-(L')\subseteq R^-(L)$, or
-    \item $R^-(L')\neq\emptyset$ and $R^-(L') \subset R^-(L)$.
-    \end{itemize}
-
-    \smallskip
-    {\bf Proposition 5}.
-    Let $P$ be a logic program and $L$ a loop of $P$. If $L$ is a proper loop of $P$, then $L$ is an elementary loop of~$P$, but not vice versa.
-
-    \smallskip
-    {\bf Example 1 (Continued)}.
-    Program $P_1$ has three proper loops: $\{q\}$,
-    $\{r, q\}$ and $\{p, r, q\}$.
-
-    $\{p, r\}$ and $\{p\}$ are not proper loops as $R^-(\{p, r\}) = \{{p\gets.},\,{r\gets q.}\}$, $R^-(\{p\}) = \{ {p\gets.}, \,$ ${p\gets r.}\}$ and $R^-(\{p, r, q\}) = \{ {p\gets.}\}$.
-
-    $\{r\}$ is not a proper loops as $R^-(\{r\}) = \{ {r\gets p.},\, {r\gets q.}\}$ and $R^-(\{q, r\}) = \{ {r\gets p.}\}$.
-
+    Program simplification uses a consequence to simplify the program. The answer sets of the program can be computed from resulting program.
+    \par
+    \looseness=-1
+    We define $\trp(P, L)$ to be the program obtained from $P$ by
+    \par
+    1. deleting each rule $r$ that has an atom $p\in head(r)$ or $p\in body^-(r)$ with $p\in L$, and
+    \par
+    2. replacing each rule $r$ that has an atom $p\in body^+(r)$ with $p\in L$ by the rule
+      $head(r) \gets body^+(r)\setminus L, body^-(r).$
+    \par
+    And we define the {\em consequence top} of $P$ w.r.t $U$, denoted by $ct_U(P)$, to be the union of the following sets of rules:
+    \begin{tight_itemize}
+      \item $P\setminus (b_U(P)\cup out_U(P))$,
+      \item $\{ \{x_E\}\cup head(r)\setminus E\gets body(r)\mid r\in in'_U(P)$ and $r\in R^-(E, P)\}$, for each $E\in \CS_U(P)$,
+      \item $\{ head(r)\gets x_{E_1}, \ldots, x_{E_t}, body(r)\mid r\in out_U(P)$, for all possible $E_i\in \CS_U(P)$ $(1\leq i\leq t)$ \st $body^+(r)\cap E_i\neq\emptyset\}$,
+      \item $\{ \gets\Not x_E\}$, for each $E\in \CS_U(P)$,
+    \end{tight_itemize}
+    
+    \par
+    {\bf Proposition 8 } Let set $U$ of atoms be a consequence of an NLP $P$. A set $S$ is an answer set of $P$ iff there is an answer set $S^*$ of $\trp(ct_U(P), U)$ \st $S\setminus U = S^*\cap \Atom(P)$.
+    
+    
    \vspace{0.3em}
   }
 
