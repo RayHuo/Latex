@@ -45,7 +45,7 @@
 
 \newenvironment{tight_itemize}{
 \begin{itemize}
-   \setlength{\itemsep}{0pt}%
+\setlength{\itemsep}{0pt}%
   \setlength{\topsep}{0pt}%
   \setlength{\partopsep}{0pt}%
   \setlength{\parskip}{0pt}%
@@ -243,7 +243,7 @@ They showed that the task of computing the answer sets of the program can be con
         And $e_U(P, X)$ is the set of rules obtained by deleting some rules from $P$ \wrt $U$ and $X$.
 
         \par
-        A {\em solution} of $P$ \wrt $U$ is a pair $\langle X, Y\rangle$ of sets of atoms \st 
+        A {\em solution} of $P$ \wrt $U$ is a pair $\langle X, Y\rangle$ of sets of atoms \st
         $X$ is an answer set of $b_U(P)$, and $Y$ is an answer set of $e_U(P\setminus b_U(P), X)$.
 
         \smallskip
@@ -300,20 +300,64 @@ They showed that the task of computing the answer sets of the program can be con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \smallskip
     \begin{multicols}{2}
-        \begin{tikzpicture}[x=1\linewidth,y=-0.58\linewidth]
-            \path (0,0) node{\hspace{-1.8em}\includegraphics[width=1.07\linewidth]{figure2}};
-        \end{tikzpicture}
+        For extending the splitting set theorem to arbitrary set of atoms for NLP, we introduce some notions. Let $U$, $X$ be sets of atoms, $P$ an NLP. 
+        \par
+        $\EC_U(P)$ and $\ECC_U(P, X)$ are set of rules based on $\Atom(b_U(P))\setminus U$.
+        \par
+        The {\em in-rules} of $P$ \wrt $U$, denoted by $in_U(P)$, is the set of rules $r\in P$ \st $head(r)\cap U\neq\emptyset$ and $(body^+(r)\cup head(r)) \not\subseteq U$, the {\em out-rules}, denoted by $out_U(P)$ is similar to $in_U(P)$.
 
-        \smallskip
+        \par
+        A set of atoms $E$ is a {\em semi-loop} of $P$ \wrt $U$ if there exists a loop $L$ of $P$ \st $E= L\cap U$ and $E\subset L$.
+        We denote
+        \begin{multline*}
+          \SL_U(P, X) = \{ E\mid \text{$E$ is a semi-loop of $P$ \wrt $U$,}\\ E\subseteq X \text{ and } R^-(E, P, X)\subseteq in_U(P)\}.
+        \end{multline*}
+
+        \par
+        Finally, we propose a new {\em top} of $P$ \wrt $U$ under $X$, denoted by $t_U(P, X)$, is the union of the following sets of rules:
+        \begin{tight_itemize}
+          \item $P\setminus (b_U(P)\cup out_U(P))$,
+          \item $\{\,x_E\gets body(r) \mid r\in in_U(P) \text{ and } r\in R^-(E,P, X)\,\}$, for each $E\in \SL_U(P, X)$,
+          \item $\{\, head(r)\gets x_{E_1}, \ldots, x_{E_t}, body(r)\mid r\in out_U(P),$ for all possible $E_i\in \SL_U(P, X)$ $(1\leq i\leq t)$ \st \mbox{$body^+(r)\cap E_i\neq\emptyset\,\}$},
+        \end{tight_itemize}
+        where $x_E$'s are new atoms \wrt $E\in \SL_U(P, X)$.
+
         \looseness=-1
-        By considering the \textit{positive body-head dependency graph} of a program,
-        the method of computing proper loops can be extended and a larger number of loops could be proved to be not proper.
-        We provide an alternative approach.
+        A {\em solution} of $P$ \wrt $U$ is a pair $\langle X,Y\rangle$ of sets of atoms \st
+        \begin{tight_itemize}
+          \item $X$ is an answer set of $b_U(P)\cup \EC_U(P)$,
+          \item $Y$ is an answer set of $e_U(t_U(P, X), X)\cup \ECC_U(P, X)$.
+        \end{tight_itemize}
 
-        \smallskip
-        Intuitively, if we can ``remove'' the vertex $body(r_1)$ or $body(r_2)$ in left figure, then the number of loops would be greatly reduced.
-        Let the left subgraph be a strongly connected subgraph with $n$ number of atoms and the right subgraph a strongly connected subgraph with $m$ number of atoms,
-        after ``removing'',  the number of loops is reduced from $2^{m+n-4} + 2^n+2^m -2$ to $2^n+2^m - 2$.
+        \par
+        {\bf Theorem 3 }. Let $P$ be an NLP and $U$ a set of atoms. A set $S$ is an answer set of $P$ iff $S = (X\cup Y)\cap \Atom(P)$ for some solution $\langle X, Y\rangle$ of $P$ \wrt~$U$.
+        
+        \par
+        
+        \begin{table}[htb]
+        \vspace{-7.5pt}
+        \caption{Comparing two ways of computing an answer set} %\label{tab:1}
+        \centering
+        {\small
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Problem & whole & bottom & top & bottom+top \\
+        \hline
+        2-10 & 0.03 & 0.01 & 0.02 & 0.03\\
+        2-15 & 0.53 & 0.03 & 0.16 & 0.19\\
+        2-20 & 1.84 & 0.03 & 0.68 & 0.71\\
+        2-25 & 5.56 & 0.07 & 2.25 & 2.31\\
+        2-30 & 14.07 & 0.15 & 5.66 & 5.81\\
+        2-35 & 27.16 & 0.23 & 12.61 & 12.83\\
+        2-40 & 52.53 & 0.32 & 23.61 & 23.93\\
+        2-45 & 106.93 & 0.59 & 48.73 & 49.32\\
+        2-50 & 171.94 & 0.75 & 80.95 & 81.70\\
+        \hline
+        \end{tabular}}
+        \vspace{-8pt}
+        \end{table}
+
+
 
     \end{multicols}
     \vspace{0.0em}
