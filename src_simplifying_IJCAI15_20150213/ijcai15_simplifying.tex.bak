@@ -1,0 +1,1064 @@
+%%%% ijcai15.tex
+
+%\typeout{IJCAI-15 Instructions for Authors}
+
+% These are the instructions for authors for IJCAI-15.
+% They are the same as the ones for IJCAI-11 with superficical wording
+%   changes only.
+
+\documentclass{article}
+% The file ijcai15.sty is the style file for IJCAI-15 (same as ijcai07.sty).
+\usepackage{ijcai15}
+
+% Use the postscript times font!
+\usepackage{times}
+
+\usepackage{verbatim}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\usepackage[linesnumbered,ruled,slide,boxed,vlined]{algorithm2e}
+
+\usepackage{enumerate}
+
+\usepackage[english]{babel}
+
+\usepackage{multirow}
+
+
+% the following package is optional:
+%\usepackage{latexsym}
+
+% Following comment is from ijcai97-submit.tex:
+% The preparation of these files was supported by Schlumberger Palo Alto
+% Research, AT\&T Bell Laboratories, and Morgan Kaufmann Publishers.
+% Shirley Jowell, of Morgan Kaufmann Publishers, and Peter F.
+% Patel-Schneider, of AT\&T Bell Laboratories collaborated on their
+% preparation.
+
+% These instructions can be modified and used in other conferences as long
+% as credit to the authors and supporting agencies is retained, this notice
+% is not changed, and further modification or reuse is not restricted.
+% Neither Shirley Jowell nor Peter F. Patel-Schneider can be listed as
+% contacts for providing assistance without their prior permission.
+
+% To use for other conferences, change references to files and the
+% conference appropriate and use other authors, contacts, publishers, and
+% organizations.
+% Also change the deadline and address for returning papers and the length and
+% page charge instructions.
+% Put where the files are available in the appropriate places.
+
+\frenchspacing
+
+\abovedisplayskip=0pt%
+\belowdisplayskip=0pt%
+\floatsep=0pt%
+\textfloatsep=0pt%
+\arraycolsep=0pt%
+\abovecaptionskip=0pt%
+\belowcaptionskip=0pt%
+
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{\end{enumerate}}
+
+\newenvironment{tight_enumerate1}{
+\begin{enumerate}[(i)]
+  \setlength{\itemsep}{0pt}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{\end{enumerate}}
+
+\newenvironment{tight_itemize}{
+\begin{itemize}
+   \setlength{\itemsep}{0pt}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{\end{itemize}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}{{\bf Proof:}}{\rule{2mm}{2mm}\\[-.5em] }
+\newtheorem{definition}{Definition}
+
+\newenvironment{proofs}{{\bf Proof Sketch:}}{\rule{2mm}{2mm}\\[-.5em] }
+
+
+\newcommand\ie{{\it i.e.\@}}
+\newcommand\eg{{\it e.g.\@ }}
+\newcommand\st{{\it s.t.\@ }}
+\newcommand\wrt{{\it w.r.t.\@ }}
+
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+\newcommand{\Not}{not \,}
+
+\newcommand{\Atom}{Atom\!s}
+\newcommand{\Lit}{Lit}
+
+\newcommand{\CLF}{C\!L\!F}
+\newcommand{\DLF}{D\!L\!F}
+\newcommand{\LF}{L\!F}
+
+
+\newcommand{\head}{head}
+
+\newcommand{\trn}{tr_n}
+\newcommand{\trp}{tr_p}
+\newcommand{\WFM}{W\!F\!M}
+\newcommand{\GRS}{G\!R\!S}
+\newcommand{\lfp}{l\!f\!p}
+\newcommand{\UC}{U\!C}
+\newcommand{\RS}{R\!S}
+\newcommand{\uc}{uc}
+\newcommand{\gfp}{g\!f\!p}
+\newcommand{\RSC}{R\!S\!C}
+\newcommand{\GSRS}{G\!S\!R\!S}
+\newcommand{\GWRS}{G\!W\!R\!S}
+
+
+\newcommand{\mycom}{\operatornamewithlimits{\textbf{\LARGE ,}}}
+
+
+
+\title{Simplifying a Logic Program Using Its Consequences}
+\author{\textbf{ID: 223}\\
+        \textbf{KRR:~Logic Programming}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\looseness=-1
+A consequence of a logic program is a consistent set of literals that are satisfied by every answer sets of the program.
+Some consequences can be used to simplify the logic program so that the resulting program would no longer contain variables in the consequence and the answer sets can be computed from the answer sets of the resulting program. The well-founded model is such a consequence that is commonly used in the preprocessing state of answer set programming (ASP) solvers for simplifying logic programs.
+In this paper, we extend the notion of well-founded models and provide a sufficient and necessary condition for a consequence that could be used to simplify the logic program. We also provide a sufficient and necessary condition for a consequence so that the simplified logic program with rules constructed from the consequence is strongly equivalent to the original program.
+%that could simplify the logic program so that the resulting program with rules constructed from the consequence is strongly equivalent to the original program.
+We explore the computational complexities on checking both conditions. As an application, we introduce a weak version of the conditions, which results a sufficient condition for a consequence to simplify a logic program. We provide an algorithm to identify the class of consequences specified by the sufficient condition.
+We show that for some programs, the consequence in the class is larger than the well-founded model.
+%Since it is coNP-hard to identify both conditions, we introduce a weaker version of these conditions and provide a polynomial time algorithm for identifying such weaker version for normal logic programs.
+% At last, we show that for some programs from well-known benchmarks, this weaker version is larger than the well-founded model, which could potentially improve the efficiency of ASP solvers.
+\end{abstract}
+
+\section{Introduction}
+
+Nowadays {\em Answer Set Programming} (ASP) has been considered as one of the most popular nonmonotonic rule-based formalisms, mainly due to the availability of efficient ASP solvers such as smodels~\cite{syrjanen2001smodels}, ASSAT~\cite{lin2004assat}, cmodels~\cite{lierler2004cmodels}, clasp~\cite{gebser2007clasp}, claspD~\cite{drescher2008conflict}, and DLV~\cite{leone2002dlv}.
+
+All of these modern ASP solvers require a preprocessing state for simplifying a logic program by its consequences in their grounding engines, like lparse~\cite{syrjanen2000lparse}, gringo~\cite{gebser2007gringo}, and the grounding engine for DLV~\cite{leone2002dlv}. In specific, a {\em consequence} is a consistent set of literals that are satisfied by every answer sets of the program. Many consequences can be derived using efficient inference rules before computing the answer sets of the program.
+For instance, a consequence can be computed by applying unit propagation to the set of clauses obtained from Clark's completion~\cite{clark78} of the program, applying the well-founded operator~\cite{leone1997disjunctive} to the program, using the loop formulas of loops with at most one external support rule~\cite{chen2013}, and applying the lookahead operator based on previous operations.
+
+These consequences can help computing the answer sets of the program.
+However, only a few of them can be used to simplify the logic program so that the resulting program would no longer contain variables in the consequence and the answer sets can be constructed from the answer sets of the resulting program. The best known examples are the well-founded models for normal logic programs~\cite{van1991well} and the results computed by the well-founded operator for disjunctive logic programs~\cite{leone1997disjunctive}, which have been used in grounding engines of ASP solvers.
+
+
+To extend the notion of the well-founded model, we consider when a consequence can be used to simplify a logic program.
+The main contribution of the paper is that, we propose two conditions (a) and (b), so that
+\begin{tight_itemize}
+  \item a consequence satisfies the condition (a) if{f} the answer sets of the program can be constructed from the answer sets of the program simplified by the consequence,
+  \item a consequence satisfies the condition (b) if{f} the original program is strongly equivalent to the simplified program with rules constructed from the consequence.
+\end{tight_itemize}
+We also explore the computational complexities on checking both conditions.
+These conditions provide a guideline to explore classes of consequences that could be used to simplify a logic program.
+As an application, we introduce a weak version of the conditions, which provides a sufficient condition for a consequence to simplify a logic program. We provide an algorithm to identify the class of consequences specified by this sufficient condition.
+We show that for some programs, the consequence in the class is larger than the well-founded model.
+
+
+%In this paper, we intend to extend the notion of the well-founded model to identify consequences that could simplify the logic program.
+%We provide a sufficient and necessary condition for a consequence that could be used to simplify the logic program. We also provide a sufficient and necessary condition for a consequence that could simplify the logic program so that the resulting program with rules constructed from the consequence is strongly equivalent to the original program.
+%We show that identifying both conditions are coNP-hard. Then we introduce a weaker version of both conditions and provide a polynomial time algorithm for identifying such weaker version for normal logic programs. At last, we show that for some programs from well-known benchmarks, this weaker version is larger than the well-founded model, which could potentially improve the efficiency of ASP solvers.
+
+
+
+\section{Preliminaries}
+
+In this paper, we consider only fully grounded finite
+logic programs. A \textit{(disjunctive) logic program} (DLP) is a finite set
+of (disjunctive) rules of the form
+\begin{equation}\label{dlp}
+a_1\lor\cdots\lor a_k\gets a_{k+1}, \ldots, a_m, \Not  a_{m+1},
+\ldots, \Not a_n,
+\end{equation}
+where $n\geq m \geq k \geq 0$, $n\geq 1$ and $a_1, \ldots, a_n$ are atoms. If $k \leq 1$, it is a {\em normal
+rule}; if $m=n$, it is a {\em positive rule};
+ if $n=m=k=1$, it is a {\em fact}. In particular, a {\em normal logic program} (NLP) is a finite set
+of normal rules and a {\em positive logic program} is a finite set of positive rules.
+
+We will also write rule $r$ of form (\ref{dlp}) as
+\begin{equation}\label{dlp1}
+head(r) \gets body(r),
+\end{equation}
+where~$head(r)$ is~$a_1\lor\cdots\lor a_k$, $body(r) = body^+(r)
+\land body^-(r)$, $body^+(r)$ is~$a_{k+1}\land \cdots\land a_m$,
+and~$body^-(r)$ is~$\lnot a_{m+1}\land \cdots \land\lnot a_n$, and
+we identify~$head(r)$, $body^+(r)$, $body^-(r)$ with their
+corresponding sets of atoms.
+% and~$body(r)$ the set $\{\,a_{k+1}, \ldots,$ $ a_m, \lnot a_{m+1}, \ldots, \lnot a_n\,\}$ of literals obtained from the body of the rule with~``$not$'' replaced by~``$\lnot$''.
+%We denote $\Atom(r) = head(r)\cup body^+(r)\cup body^-(r)$.
+%Let $R$ be a set of rules,
+%%we denote $head(R) = \bigcup_{r\in R} head(r)$, $body^+(R) = \bigcup_{r\in R} body^+(r)$, and $\Atom(R) = \bigcup_{r\in R} \Atom(r)$.
+%we denote $\Atom(R) = \bigcup_{r\in R} \Atom(r)$.
+
+%Let $L$ be a set of literals, we denote $\overline{L} = \{ \neg p\mid p\in L\}\cup \{p\mid \neg p\in L\}$, $L^+= \{p\mid p\in L\}$, and $L^- = \{p\mid \neg p\in L\}$.
+
+A set $S$ of atoms {\em satisfies} a rule $r$, if $body^+(r)\subseteq S$ and $body^-(r)\cap S=\emptyset$ implies $head(r)\cap S\neq\emptyset$. $S$ {\em satisfies} a program $P$, if $S$ satisfies every rules in $P$.
+Let $L$ be a set of literals and $F$ a propositional formula, we write $L\models F$ if $L$ entails $F$ in the sense of classical logic, $\overline{L} = \{ \neg p\mid p\in L\}\cup \{p\mid \neg p\in L\}$, $L^+= \{p\mid p\in L\}$, and $L^- = \{p\mid \neg p\in L\}$.
+
+In the following we recall the basic notions about answer sets~\cite{gelfond1991classical}, SE-models~\cite{turner2003strong},
+external support rules and loop formulas~\cite{LeeLifschitz:disj},
+the well-founded model~\cite{{van1991well}}, and the well-founded operator~\cite{leone1997disjunctive}.
+
+\subsection{Answer Set Semantics}
+
+Given a DLP~$P$ and a set~$S$ of atoms, the Gelfond-Lifschitz reduct of
+$P$ on $S$, written $P^S$, is obtained from $P$ by deleting:
+\begin{tight_enumerate}
+\item each rule that has a formula~$\Not p$ in its body with~$p\in S$,
+\item all formulas of the form~$\Not p$ in the bodies of the remaining rules.
+\end{tight_enumerate}
+A set $S$ of atoms is an {\em answer set} of $P$ if $S$ is a minimal set satisfying $P^S$.
+
+A {\em SE-interpretation} is a pair $(X, Y)$ where $X$ and $Y$ are sets of atoms and $X\subseteq Y$. A SE-interpretation $(X, Y)$ is a {\em SE-model} of a DLP $P$ if $Y$ satisfies $P$ and $X$ satisfies $P^Y$. A SE-model $(Y, Y)$ of $P$ is an {\em equilibrium model} of $P$, if there does not exist another set $X$ such that $X\subset Y$ and $(X, Y)$ is a SE-model of $P$.
+
+Two DLPs $P_1$ and $P_2$ are {\em strongly equivalent}, if for any DLP~$P'$, programs $P_1\cup P'$ and $P_2\cup P'$ have the same set of answer sets.
+
+The SE-models and the answer sets of a DLP have the following proposition~\cite{Ferraris05a,lifschitz2001strongly}.
+\begin{proposition}
+  Let $P_1$, $P_2$ be two DLPs and $S$ a set of atoms.
+  \begin{tight_itemize}
+    \item $S$ is an answer set of $P_1$ if{f} $(S, S)$ is an equilibrium model of $P_1$.
+    \item $P_1$ is strongly equivalent to $P_2$ if{f} $P_1$ and $P_2$ have the same SE-models.
+  \end{tight_itemize}
+\end{proposition}
+
+%\begin{theorem}[Theorem 1 in~\cite{Ferraris05a}]
+%  For any DLP, its equilibrium models are identical to its answer sets.
+%\end{theorem}
+%\begin{theorem}[Theorem 1 in~\cite{lifschitz2001strongly}]
+%  For any DLPs $P_1$ and $P_2$, $P_1$ is strongly equivalent to $P_2$ if and only if $P_1$ and $P_2$ have the same SE-models.
+%\end{theorem}
+
+
+\subsection{External Support Rules and Loop Formulas}
+
+%Here we briefly review the notions of external support rules and loop formulas in DLPs~\cite{LeeLifschitz:disj}.
+
+Given a nonempty set $E$ of atoms,
+a rule $r$ is an \textit{external support} of $E$ if $head(r)\cap E\neq
+\emptyset$ and $E\cap body^+(r) = \emptyset$.
+Given a DLP $P$, we use $R^-(E, P)$ to denote the set of external support rules of $E$ in $P$.
+
+The (conjunctive) {\em loop formula} of $E$ under $P$, written $\LF(E, P)$, is the following implication
+\[
+\bigwedge_{p\in E} p\supset \bigvee_{r\in R^-(E, P)} \Big(body(r)\land\bigwedge_{q\in head(r)\setminus E} \lnot
+q\Big).
+\]
+A set $S$ of atoms {\em satisfies} $\LF(E, P)$, if $E\subseteq S$ implies that there exists a rule $r\in R^-(E, P)$ such that $body^+(r)\subseteq S$, $body^-(r)\cap S=\emptyset$, and $(head(r)\setminus E)\cap S=\emptyset$, \ie, $S\cup \{ \neg p\mid p\notin S\}\models \LF(E, P)$.
+
+\begin{proposition}[Theorem 1 in~\cite{LeeLifschitz:disj}]\label{them:1}
+Let $P$ be a DLP and $S$ a set of atoms. If $S$ satisfies $P$, then following conditions are equivalent to each other:
+\begin{tight_itemize}
+\item $S$ is an answer set of $P$;
+\item $S$ satisfies $\LF(E, P)$ for every nonempty set $E$ of atoms.
+\end{tight_itemize}
+\end{proposition}
+
+
+
+\subsection{Well-Founded Semantics}
+
+%The notion of the well-founded model was proposed by \citeauthor{van1991well}~\shortcite{van1991well} for NLPs. Later, \citeauthor{leone1997disjunctive}~\shortcite{leone1997disjunctive} extended the well-founded operator to DLPs. We briefly review the notions here.
+
+Let $P$ be a DLP and $I$ a set of literals, a set $X$ of atoms is an {\em unfounded set} of $P$ \wrt $I$ if for each atom $p\in X$ and each rule $r\in P$ such that $p\in head(r)$, at least one of the following conditions holds:
+\begin{tight_itemize}
+  \item $body(r) \cap \overline{I} \neq\emptyset$,
+  \item $X\cap body^+(r)\neq\emptyset$, or
+  \item $(head(r)\setminus X)\cap I\neq\emptyset$.
+\end{tight_itemize}
+
+\begin{comment}
+\begin{proposition}
+  Let $P$ be a logic program and $I$ a set of literals, a set $X$ of atoms is an unfounded set of $P$ w.r.t.\@ $I$ if and only if for every rule $r\in R^-(X, P)$, $I\models \neg body(r) \lor \bigvee_{q\in head(r)\setminus X} q$.
+\end{proposition}
+\begin{proof}
+  $\Rightarrow$: $X$ is an unfounded set of $P$ w.r.t. $I$, then for every $r\in R^-(X, P)$, $I\models \neg body(r)$ or $(head(r)\setminus X)\cap I\neq\emptyset$. So $I\models \neg body(r)\lor \bigvee_{q\in head(r)\setminus X} q$.
+
+  $\Leftarrow$: For every rule $r\in R^-(X, P)$, $I\models \neg body(r) \lor \bigvee_{q\in head(r)\setminus X} q$. For each rule $r'$ such that $head(r')\cap X\neq\emptyset$, $r'\notin R^-(X, P)$ or $r'\in R^-(X, P)$. If $r'\notin R^-(X, P)$, then $X\cap body^+(r')\neq\emptyset$. If $r'\in R^-(X, P)$, then $I\models \neg body(r)$ or $head(r)\setminus X)\cap I\neq\emptyset$. So $X$ is an unbounded set of $P$ w.r.t. $I$.
+\end{proof}
+\end{comment}
+
+Let $I$ be a set of literals.
+If $P$ is an NLP, the union of two unfounded sets is also an unfounded set.
+%, then there exists the greatest unfounded set of $P$.
+%However, the property does not hold for DLPs in general.
+$I$ is {\em unfounded-free} for a DLP $P$ if $I\cap X=\emptyset$ for each unfounded set $X$ of~$P$ \wrt~$I$.
+If $I$ is unfounded-free, then the union of two unfounded sets of $P$ \wrt $I$ is also an unfounded set, thus there exists the greatest unfounded set of~$P$ \wrt $I$.
+We use $U_P(I)$ to denote such greatest unfounded set, if exists.
+
+We define two operators for a DLP $P$ and a set $I$ of literals:
+\begin{align*}
+  T_P(I) =&\ \{ p\mid \text{there exists a rule $r\in P$ \st $p\in head(r)$}\\ &\ \hspace{.7cm}\text{and $I\models body(r)\land \bigwedge_{q\in head(r)\setminus \{p\}} \neg q$}\};\\
+  W_P(I) =&\ T_P(I) \cup \overline{U_P(I)}.
+\end{align*}
+$T_P$, $U_P$, and $W_P$ are monotonic operators.
+We use $\WFM(P)$ to denote the least fixed point of the operator $W_P$. If $P$ is an NLP, $\WFM(P)$ is the {\em well-founded model} of~$P$ as defined in~\cite{van1991well}.
+
+
+\section{Simplifying A Logic Program}
+
+A {\em consequence} of a program is a consistent set of literals that are satisfied by every answer set of the program.
+A consequence is {\em positive} if it is a set of atoms.
+Some consequences can be used to simplify the logic program so that the resulting program would no longer contain variables in the consequence and the answer sets of the program can be computed from the answer sets of the resulting program.
+$\WFM(P)$ is such a consequence that is commonly used to simplify the program in the grounding engines, like lparse~\cite{syrjanen2000lparse}, gringo~\cite{gebser2007gringo}, and the grounding engine for DLV~\cite{leone2002dlv}, of modern ASP solvers. In this section, we consider how to extend the idea to other consequences of the program.
+
+Let $L$ be a consequence of a DLP $P$, we define $\trn(P, L)$ to be the program obtained from $P$ by
+\begin{tight_enumerate}
+  \item deleting each rule $r$ that has an atom $p\in body^+(r)$ with $\neg p\in L$, and
+  \item replacing each rule $r$ that has an atom $p\in head(r)$ or $p\in body^-(r)$ with $\neg p\in L$ by a rule $r'$ such that
+  $head(r') = head(r)\setminus L^-$, $body^+(r') = body^+(r)$, and $body^-(r') = body^-(r)\setminus L^-$.
+ % $$head(r)\setminus L^-\gets body^+(r), body^-(r)\setminus L^-.$$
+\end{tight_enumerate}
+We define $\trp(P, L)$ to be the program obtained from $P$ by
+\begin{tight_enumerate}
+  \item deleting each rule $r$ that has an atom $p\in head(r)$ or $p\in body^-(r)$ with $p\in L$, and
+  \item replacing each rule $r$ that has an atom $p\in body^+(r)$ with $p\in L$ by a rule $r'$ such that
+  $head(r') = head(r)$, $body^+(r') = body^+(r)\setminus L^+$, and $body^-(r') = body^-(r)$.
+ % $$head(r) \gets body^+(r)\setminus L, body^-(r).$$
+\end{tight_enumerate}
+Note that $\trn(P, L)$ (resp. $\trp(P, L)$) does not contain any atoms in $L^-$ (resp. $L^+$) and $\trp(\trn(P, L), L)$ does not contain any atoms occurring in $L$.
+
+The following property explains why $\WFM(P)$ can be used to simplify the program $P$.
+\begin{proposition}\label{prop:wfm}
+Let $P$ be a DLP and $L = \WFM(P)$.
+\begin{tight_enumerate1}
+  \item $P$ and $\trp(\trn(P, L), L)\cup \{ p\gets\ \mid p\in L\}$ have the same set of answer sets.
+  \item $P\cup \{\gets p\mid \neg p\in L\}$ is strongly equivalent to
+  \[
+  \trp(\trn(P, L), L)\cup \{ p\gets\ \mid p\in L\} \cup \{ \gets p\mid \neg p\in L\}.
+  \]
+\end{tight_enumerate1}
+\end{proposition}
+Proposition~\ref{prop:wfm} is on longer true, if $L$ is larger than $\WFM(P)$.
+\begin{comment}
+The property can be further extended.
+\begin{proposition}\label{prop:wfm:e}
+Let $P$ be a DLP and $L = \WFM(P)$. The program
+\[
+P \cup  \{ \gets p\mid \neg p\in L\}
+\]
+is strongly equivalent to the program
+\[
+\trp(\trn(P, L), L)\cup \{ p\gets\ \mid p\in L\} \cup \{ \gets p\mid \neg p\in L\}.
+\]
+\end{proposition}
+\end{comment}
+
+%When $L$ is a consequence of a DLP $P$ not limited to $\WFM(P)$,
+%we show that $\trn(P, L)$ could simplify $P$ in general while $\trp(P, L)$ could only simplify $P$ for some special cases.
+
+\begin{proposition}\label{prop:c1}
+  Let $L$ be a consequence of a DLP $P$.
+  \begin{tight_itemize}
+    \item $P$ and $\trn(P, L)$ have the same set of answer sets.
+    \item $P\cup \{\gets p\mid \neg p\in L\}$ is strongly equivalent to
+    $\trn(P, L) \cup \{\gets p\mid \neg p\in L\}$.
+    %\item If for every atom $p\in L$ there is a rule $p\gets$ in $P$, then a set $S$ is an answer set of $P$ iff $S\setminus L$ is an answer set of $\trp(P, L)$.
+    \item An answer set of $P$ is always an answer set of $\trp(P, L)\cup \{p\gets \mid p\in L\}$, but not vice versa in general.
+  \end{tight_itemize}
+\end{proposition}
+\begin{proofs}
+  For any nonempty set $E$ of atoms, under $L$, the loop formula $\LF(E, P)$ is equivalent to $\LF(E, \trn(P, L))$, and $\LF(E, P)$ implies $\LF(E, \trp(P, L)\cup \{p\gets\mid p\in L\} )$.
+\end{proofs}
+%Intuitively, for any nonempty set $E$ of atoms, the loop formula $\LF(E, P)$ is equivalent to $\LF(E, \trn(P, L))$ under $L$, while $\LF(E, P)$ only implies $\LF(E, \trp(P, L)\cup \{p\gets\mid p\in L\} )$ under $L$.
+
+%Intuitively, given a consequence $L$ of a DLP $P$, we can simplify $P$ by $\trn(P, L)$, however we cannot simplify $P$ by $\trp(P, L)$ in general.
+
+\begin{example}
+  Consider the logic program $P_1$:
+\begin{align*}
+ a &\gets b, & c &\gets a, & b&\gets c, & c&\gets d, & a&\gets f, \\ d&\gets \Not e, & e &\gets \Not d,  & &\gets \Not a, & f&\gets a.
+\end{align*}
+$L = \set{a,f}$ is a consequence of $P_1$, and $\trp(P_1, L)$ is:
+\begin{align*}
+  c &\gets, & b&\gets c, & c&\gets d, &
+  d&\gets \Not e, & e &\gets \Not d.
+\end{align*}
+The only answer set of $P_1$ is $\set{a, b, c, d, f}$. However, $\trp(P_1, L)$ has two answer sets: $\set{b, c, d}$ and $\set{b,c, e}$.
+\end{example}
+
+Given a consequence $L$ of a DLP $P$, we can simplify the program by $\trn(P, L)$ which would no longer contain atoms in $L^-$. However, we cannot use $\trp(P, L)$ to simplify $P$ in general.
+In this paper, we consider when the conditions in Proposition~\ref{prop:wfm} would be true for a positive consequence $L$.
+
+%In next sections, we identify classes of consequences, so that $P$ can be simplified by the operator $\trp$, \ie, Proposition~\ref{prop:wfm} is true if $L$
+%
+%
+%the relations in Proposition~\ref{prop:wfm} would be maintained respectively.
+
+\begin{comment}
+
+\section{Reliable Sets}
+
+In this section, we propose the notion of the reliable set of a logic program. We show that, the reliable set can be used to simplify the program, and the notion is closely related to the well-founded operator. At last, we provide the computational complexity for identifying a reliable set.
+
+
+Given a DLP $P$, a set $U$ of atoms is said to be a {\em reliable set} of $P$, if for every nonempty subset $E$ of $U$, there exists a rule $r\in R^-(E, P)$ such that $head(r)\subseteq E$ and $U\models body(r)$.
+
+Notice that, $r\in R^-(E, P)$ and $U\models body(r)$ implies $body^+(r) \subseteq U\setminus E$ and $body^-(r)=\emptyset$. Then $U$ is also a consequence of $P$.
+\begin{proposition}
+If $U$ is a reliable set of a DLP $P$, then $U$ is a consequence of $P$.
+\end{proposition}
+
+
+\begin{theorem}\label{them:rs1}
+Let $U$ be a reliable set of a DLP $P$.
+$P$ is strongly equivalent to the program $\trp(P, U) \cup \{p\gets \mid p\in U\}$.
+\end{theorem}
+\begin{proofs}
+ It is easy to verify that, there does not exist a SE-model $(X, Y)$ of $P$ such that $U\not\subseteq Y$ or $U\not\subseteq X$. Then both programs have the same set of SE-models.
+\end{proofs}
+
+From Theorem~\ref{them:rs1}, we can simplify a logic program by its reliable sets. Moreover, the notion of the reliable set specifies a necessary and sufficient condition for the strongly equivalent relation between the following two programs.
+\begin{theorem}\label{them:rs2}
+  Let $U$ be a set of atoms of a DLP $P$. The program
+  \[
+  \{ r\mid {r\in P},\, head(r)\subseteq U\}
+   \]
+   is strongly equivalent to the program
+   \[
+   \{p\gets\mid p\in U\}
+   \] if and only if $U$ is a reliable set of $P$.
+\end{theorem}
+\begin{proofs}
+Let $P_1 = \{ r\mid {r\in P},\, head(r)\subseteq U\}$.
+
+  $\Leftarrow$: $U$ is a reliable set of $P$ implies $U$ is a reliable set of $P_1$. The direction can be proved from Theorem~\ref{them:rs1}.
+
+  $\Rightarrow$: Assume that $U$ is not a reliable set of $P$, then there exists a nonempty subset $E$ of $U$ which prevents $U$ to be a reliable set. It is easy to verify that $U\setminus E$ satisfies $P_1^U$, so $(U\setminus E, U)$ is a SE-model of $P_1$, which conflicts to the fact that $(U\setminus E, U)$ is not a SE-model of $\{p\gets\mid p\in U\}$.
+\end{proofs}
+
+
+%
+%\begin{corollary}
+%  Let $U$ be a set of atoms of a DLP $P$. The program
+%  \[
+%  P\setminus \trp(P, U)
+%   \]
+%   is strongly equivalent to the program
+%   \[
+%   (\trp(P, U)\setminus P)\cup \{p\gets\mid p\in U\},
+%   \] if and only if, $U$ is a reliable set of $P$.
+%\end{corollary}
+%
+
+
+From the definition, the union of two reliable sets is still a reliable set of the program.
+\begin{proposition}
+  If $U_1$ and $U_2$ are reliable sets of a DLP $P$, then $U_1\cup U_2$ is also a reliable set of $P$.
+\end{proposition}
+
+Given a DLP $P$, there exists a greatest reliable set of $P$, denoted by $\GRS(P)$, \ie, the union of all possible reliable sets of $P$.
+We show that $\GRS(P)$ is closely related to $T(P)$, \ie, the least fixed point of the operator $T_P$.
+
+\begin{proposition}\label{prop:n1}
+  Let $P$ be an NLP. $\GRS(P) = T(P)$.
+\end{proposition}
+\begin{proofs}
+ As there is a finite number of atoms in $P$, the result can be induced from the facts that $U$ is a reliable set implies $T_P(U)$ is a reliable set, and if there is an atom $p\in U$, $U$ is a reliable set, and $p\notin T(P)$, then $U\setminus \{p\} \not\subseteq T(P)$.
+\end{proofs}
+
+\begin{corollary}
+  Let $L$ be the well-founded model of an NLP $P$. $L^+ = \GRS(\trn(P, L))$.
+\end{corollary}
+
+\begin{proposition}
+  Let $P$ be a DLP and $L = \WFM(P)$.
+  \begin{tight_itemize}
+    \item $T(P)$ is a reliable set of $P$.
+    \item $L^+ \subseteq \GRS(\trn(P, L))$.
+  \end{tight_itemize}
+\end{proposition}
+When $P$ is a DLP, it is possible that $\GRS(P) \not\subseteq T(P)$.
+\begin{example}
+  Consider the DLP $P_2$:
+  \begin{align*}
+    a \lor b &\gets, &  a &\gets b, & b &\gets a.
+  \end{align*}
+  $\GRS(P_2) = \{a, b\}$ and $T(P_2) = \emptyset$.
+\end{example}
+
+From Proposition~\ref{prop:n1}, $\GRS(P)$ can be computed from $T(P)$ in polynomial time, when $P$ is an NLP. However, it is coNP-hard, when $P$ is a DLP.
+\begin{proposition}\label{prop:complex}
+Let $P$ be a DLP and $U$ a set of atoms.
+\begin{tight_itemize}
+  \item Deciding whether $U$ is a reliable set of $P$ is coNP-complete.
+  \item Deciding whether $U$ is equivalent to $\GRS(P)$ is coNP-hard.
+  \item Deciding whether an atom $p$ is in $\GRS(P)$ is coNP-hard.
+\end{tight_itemize}
+\end{proposition}
+\begin{proofs}
+  Deciding whether $U$ is a reliable set of $P$ is a coNP problem, as we can guess a nonempty subset $E$ of $U$ which prevents $U$ to be a reliable set.
+
+  The hardness is proved by converting the SAT problem to the problem of deciding whether $U$ is not a reliable set of $P$.
+
+  Let $t$ and $e$ be new atoms that are not appeared in a set $\mathcal{C}$ of clauses. We can construct a DLP $P$ from $\mathcal{C}$ by:
+  \begin{tight_itemize}
+    \item adding rules $t\lor e\lor \bigvee_{p\in \Atom(\mathcal{C})} p\gets$ and $t\gets e$,
+    \item for each clause $C\in\mathcal{C}$, adding the rule $e\lor \bigvee_{\neg p\in C} p \gets \bigwedge_{q\in C} q$, and
+    \item for each atom $p\in\Atom(\mathcal{C})$, adding rules $t\gets p$ and $p\gets e$.
+  \end{tight_itemize}
+  It can be verified that $U =\Atom(\mathcal{C})\cup\{t, e\}$ is a reliable set of $P$ if and only if $\mathcal{C}$ is not satisfiable.
+
+  Moreover, $U$ is a reliable set of $P$ if{f} $U=\GRS(P)$ if{f} $e\in \GRS(P)$.
+\end{proofs}
+
+In Section~\ref{sec:6}, we will provide an algorithm to compute $\GRS(P)$ for a DLP $P$.
+
+\end{comment}
+
+\section{Strong and Weak Reliable Sets}
+
+%The notion of the reliable set specifies a necessary and sufficient condition for the strongly equivalent relation between two specific programs.
+In this section, we introduce notions of the strong reliable set and the weak reliable set, so that they specify sufficient and necessary conditions when a positive consequence $L$ satisfies conditions (ii) and (i) in Proposition~\ref{prop:wfm} respectively.
+%they respectively specify necessary and sufficient conditions for the strongly equivalent relation and the answer set equivalent relation between a program and its simplified result.
+We also explore the computational complexities on identifying a strong or a weak reliable set.
+
+
+Given a DLP $P$, a set $U$ of atoms is a {\em strong reliable set} of $P$, if for every nonempty subset $E$ of $U$ and every SE-model $(X, Y)$ of $P$, there exists a rule $r\in R^-(E, P)$ such that $head(r)\cap X \subseteq E$, $body^+(r) \subseteq X\cup U$, and $body^-(r)\cap (Y\cup U) =\emptyset$.
+
+\begin{proposition}\label{prop:s1}
+  If $U$ is a strong reliable set of a DLP $P$, then for every SE-model $(X, Y)$ of $P$, $U\subseteq X$, and $U$ is a consequence of $P$.
+\end{proposition}
+\begin{proofs}
+  From the definition, for every SE-model $(X, Y)$ of $P$ and every nonempty subset $E$ of $U$, $U\setminus E \subseteq X$ implies $E\cap X \neq\emptyset$. $P$ is finite, then $U\subseteq X$.
+\end{proofs}
+
+%\begin{corollary}
+%  If $U$ is a strong reliable set of a DLP $P$, then $U$ is a consequence of $P$.
+%\end{corollary}
+
+
+\begin{theorem}\label{them:s}
+  Let $P$ be a DLP and $U$ a set of atoms. $P$ is strongly equivalent to $\trp(P, U) \cup \{p\gets \mid p\in U\}$ if and only if $U$ is a strong reliable set of $P$.
+\end{theorem}
+\begin{proofs}
+  $\Leftarrow$: From Proposition~\ref{prop:s1}, for every SE-model $(X, Y)$ of $P$, $U\subseteq X$. Then both programs have the same set of SE-models.
+
+  $\Rightarrow$: Assume that $U$ is not a strong reliable set of $P$, then there exists a nonempty subset $E$ of $U$ and a SE-model $(X, Y)$ of $P$ that prevent $U$ to be a strong reliable set. From the definition, $X\setminus E$ satisfies $P^Y$, so $(X\setminus E, Y)$ is also a SE-model of $P$, which conflicts to the fact that $(X\setminus E, Y)$ is not a SE-model of $\trp(P, U) \cup \{p\gets \mid p\in U\}$.
+\end{proofs}
+
+So given a positive consequence $L$ of a DLP $P$, the condition (ii) in Proposition~\ref{prop:wfm} is true if and only if $L$ is a strong reliable set of $P$.
+
+%the notion of the strong reliable set specifies a necessary and sufficient condition for the strongly equivalent relation between a program and its simplified result.
+
+Before defining the notion of the weak reliable set, we introduce a notation.
+Given a DLP $P$ and a set $U$ of atoms, a SE-model $(X, Y)$ of $P$ is called a {\em $U$-equilibrium model} of~$P$, if $U\subseteq Y$, ${Y\setminus U} = X\setminus U$ and there does not exist another set $X'$ such that $X'\setminus U \subset X\setminus U$ and $(X'\cup U, Y)$ is a SE-model of $P$.
+We show that, a $U$-equilibrium model of $P$ is related to an answer set of $\trp(P, U)$.
+
+\begin{lemma}\label{lem:1}
+  Let $P$ be a DLP and $U$ a set of atoms. A SE-interpretation $(X, Y)$ is a SE-model of $\trp(P, U)$ if and only if there exists a SE-model $(X^*, Y^*)$ of $P$ such that $X^* = X\cup U$ and $Y^* = Y\cup U$.
+\end{lemma}
+
+\begin{proposition}\label{prop:equil}
+  Let $P$ be a DLP and $U$ a set of atoms. A set $S$ is an answer set of $\trp(P, U)$ if and only if there exists a $U$-equilibrium model $(X, Y)$ of $P$ such that $X\setminus U = Y\setminus U = S$.
+\end{proposition}
+\begin{proofs}
+  $\Leftarrow$: $(X, Y)$ is a $U$-equilibrium model of $P$, then $X\cup U = Y\cup U$ and $(X\cup U, Y\cup U)$ is a SE-model of~$P$. So $(X\setminus U, Y\setminus U)$ is a SE-model of $\trp(P, U)$. Meanwhile, there does not exist a set $X'$ such that $X'\setminus U \subset X\setminus U$ and $(X'\cup U, Y\cup U)$ is a SE-model of $P$. From Lemma~\ref{lem:1},
+   $(X'\setminus U, Y\setminus U)$ is a SE-model of $\trp(P, U)$. So $X\setminus U$ is an answer set of $\trp(P, U)$.
+
+  $\Rightarrow$: $S$ is answer set of $\trp(P, U)$, then $(S\cup U, S\cup U)$ is a SE-model of $P$ and there does not exists a set $S'$ such that $S'\subset S$ and $(S', S)$ is a SE-model of $\trp(P, U)$. From Lemma~\ref{lem:1},
+  $(S'\cup U, S\cup U)$ is a SE-model of $P$. Then $(S\cup U, S\cup U)$ is a $U$-equilibrium model of $P$.
+\end{proofs}
+
+Given a DLP $P$, a set $U$ of atoms is a {\em weak reliable set} of $P$, if for every nonempty subset $E$ of $U$ and every $U$-equilibrium model $(X, Y)$ of $P$, there exists a rule $r\in R^-(E, P)$ such that
+$head(r)\cap X \subseteq E$, $body^+(r) \subseteq X\cup U$, and $body^-(r)\cap (Y\cup U) =\emptyset$.
+
+Similar to the proof of Proposition~\ref{prop:s1}, we have the following proposition.
+\begin{proposition}\label{prop:w1}
+  If $U$ is a weak reliable set of a DLP $P$, then for every $U$-equilibrium model $(X, Y)$ of $P$, $U\subseteq X$, and $U$ is a consequence of $P$.
+\end{proposition}
+
+%\begin{corollary}
+%  If $U$ is a weak reliable set of a DLP $P$, then $U$ is a consequence of $P$.
+%\end{corollary}
+
+
+\begin{theorem}\label{them:w}
+  Let $P$ be a DLP and $U$ a set of atoms. $P$ and $\trp(P, U) \cup \{p\gets \mid p\in U\}$ have the same set of answer sets if and only if $U$ is a weak reliable set of $P$.
+\end{theorem}
+\begin{proofs}
+  $\Leftarrow$: From Proposition~\ref{prop:w1}, for every $U$-equilibrium model $(X, Y)$ of $P$, $U\subseteq X$, then $X = Y$. From Proposition~\ref{prop:equil}, for every answer set $S$ of $\trp(P, U)$, there exists a $U$-equilibrium model $(S\cup U, S\cup U)$ of $P$, then
+  $S\cup U$ is an answer set~$P$. So $P$ and $\trp(P, U) \cup \{p\gets \mid p\in U\}$ have the same set of answer sets.
+
+  $\Rightarrow$: If $U$ is not a weak reliable set of $P$, then there exists a $U$-equilibrium model $(X, Y)$ of $P$ and a nonempty subset $E$ of $U$ that prevent $U$ to be a weak reliable set of $P$. Similar to the proof for Theorem~\ref{them:s}, $(X\setminus E, Y)$ is also a $U$-equilibrium model of $P$. Then $Y$ is not an answer set of $P$ but $Y$ is an answer set of $\trp(P, U) \cup \{p\gets \mid p\in U\}$.
+\end{proofs}
+
+So given a positive consequence $L$ of a DLP $P$, the condition (i) in Proposition~\ref{prop:wfm} is true if and only if $L$ is a weak reliable set of $P$.
+
+%the notion of the weak reliable set specifies a necessary and sufficient condition for the answer set equivalent relation between a program and its simplified result.
+
+\begin{proposition}
+Let $P$ be a DLP and $U$ a set of atoms. If $U$ is a strong reliable set of $P$, then $U$ is a weak reliable set of $P$.
+%\begin{tight_itemize}
+% % \item $U$ is a reliable set of $P$ implies $U$ is a strong reliable set of $P$.
+%  \item $U$ is a strong reliable set of $P$ implies $U$ is a weak reliable set of $P$.
+%  \end{tight_itemize}
+\end{proposition}
+
+
+\begin{proposition}
+  If $U_1$ and $U_2$ are strong (resp. weak) reliable sets of a DLP $P$, then $U_1\cup U_2$ is also a strong (resp. weak) reliable set of $P$.
+\end{proposition}
+Given a DLP $P$, there exists the greatest strong (resp. weak) reliable set of $P$, denoted by $\GSRS(P)$ (resp. $\GWRS(P)$), \ie, the union of all possible strong (resp. weak) reliable sets of $P$.
+
+
+
+\begin{proposition}\label{prop:complex}
+  Let $P$ be a DLP and $U$ a set of atoms.
+  \begin{tight_itemize}
+    \item Deciding whether $U$ is a strong reliable set of $P$ is coNP-complete.
+    \item Deciding whether $U$ is a weak reliable set of $P$ is coNP-hard.
+    \item Deciding whether $U$ is equivalent to $\GSRS(P)$ (resp. $\GWRS(P)$) is coNP-hard.
+    \item Deciding whether an atom $p$ is in $\GSRS(P)$ (resp. $\GWRS(P)$) is coNP-hard.
+  \end{tight_itemize}
+\end{proposition}
+\begin{proofs}
+  The first item is a coNP problem, as we can guess a nonempty subset $E$ of $U$ and a SE-model $(X, Y)$ of~$P$ which prevents $U$ to be a strong reliable set.
+
+  The hardness is proved by converting the UNSAT problem to these problems.
+
+  Let $t$ and $e$ be new atoms not appearing in a set $\mathcal{C}$ of clauses, and $\Atom(\cal C)$ the set of atoms in $\cal C$.
+  We can construct a DLP $P$ from $\mathcal{C}$ by:
+  \begin{tight_itemize}
+    \item adding rules $t\lor e\lor \bigvee_{p\in \Atom(\mathcal{C})} p\gets$ and $t\gets e$,
+    \item for each clause $C\in\mathcal{C}$, adding the rule $e\lor \bigvee_{\neg p\in C} p \gets \bigwedge_{q\in C} q$, and
+    \item for each atom $p\in\Atom(\mathcal{C})$, adding rules $t\gets p$ and $p\gets e$.
+  \end{tight_itemize}
+  It can be verified that $U =\Atom(\mathcal{C})\cup\{t, e\}$ is a strong reliable set of $P$ if and only if $\mathcal{C}$ is not satisfiable. Moreover, $U$ is a strong reliable set of $P$ if{f} it is a weak reliable set of $P$ if{f} $U = \GSRS(P)= \GWRS(P)$ if{f} $e\in \GSRS(P)$.
+\end{proofs}
+
+Even when $P$ is an NLP, it is still hard to recognize a strong or a weak reliable set.
+\begin{proposition}
+  Let $P$ be an NLP and $U$ a set of atoms.
+  \begin{tight_itemize}
+    \item Deciding whether $U$ is a strong (resp. weak) reliable set of $P$ is coNP-complete.
+    \item Deciding whether $U$ is equivalent to $\GSRS(P)$ (resp. $\GWRS(P)$) is coNP-hard.
+    \item Deciding whether an atom $p$ is in $\GSRS(P)$ (resp. $\GWRS(P)$) is coNP-hard.
+  \end{tight_itemize}
+\end{proposition}
+\begin{proofs}
+  As $P$ is an NLP, whether a SE-model $(X, Y)$ is a $U$-equilibrium model can be checked in polynomial time. So deciding whether $U$ is a weak reliable set of an NLP $P$ is a coNP-problem.
+
+  The hardness is proved by converting the UNSAT problem to these problems.
+
+  Let $e$, $t$, and $t'$ be new atoms not appearing in a set $\mathcal{C}$ of clauses, and $\Atom(\cal C)$ the set of atoms in $\cal C$. We can construct an NLP $P$ from $\mathcal{C}$ by:
+  \begin{tight_itemize}
+    \item adding rules $e \gets t$, $t \gets \Not t'$, $t'\gets \Not t$, and $\gets t', e$,
+    \item for each atom $p\in \Atom(\mathcal{C})$, adding the rule $p\gets e$, and
+    \item for each clause $C\in \mathcal{C}$, adding the rule $e \gets \bigwedge_{\neg p\in C} p \land \bigwedge_{q \in C} \neg q$.
+  \end{tight_itemize}
+  \begin{comment}
+  If $\mathcal{C}$ is not satisfiable, then the only SE-model of $P$ is $( \Atom(\mathcal{C})\cup \{e, t\}, \Atom(\mathcal{C})\cup \{e, t\})$. We can verify that the set $U = \Atom(\mathcal{C})\cup \{e, t\}$ is a strong reliable set of $P$.
+
+  If $\mathcal{C}$ is satisfiable, then there exists some set $M\subseteq \Atom(\mathcal{C}})$ such that $(M\cup \{t'\}, M\cup \{t'\})$ is a SE-model of $P$, and $U$ is not a strong reliable set of $P$.
+  \end{comment}
+  It can be verified that $U = \Atom(\mathcal{C})\cup \{e, t\}$ is a strong reliable set of $P$ if and only if $\mathcal{C}$ is not satisfiable.
+  Moreover, $U$ is a strong reliable set of $P$ if{f} $U$ is a weak reliable set of $P$ if{f} $U= \GSRS(P) = \GWRS(P)$ if{f} $e\in \GSRS(P)$.
+\end{proofs}
+
+
+Now we provide an alternative definition of strong reliable sets, which implies an approach to recognize a strong reliable set of a DLP.
+\begin{proposition}
+  Let $P$ be a DLP and $U$ a set of atoms. $U$ is a strong reliable set of $P$ if and only if $U\subseteq X$ for every SE-model $(X, Y)$ of $P$.
+\end{proposition}
+\begin{proofs}
+  From the definition, if $U\subseteq X$ for every SE-model $(X, Y)$ of $P$, then $U$ is a strong reliable set of $P$.
+  Proposition~\ref{prop:s1} proves the another direction.
+\end{proofs}
+
+From~\cite{pearce2001encodings}, a DLP $P$ can be translated to a propositional formula $\pi(P)$, such that $(X, Y)$ is a SE-model of $P$ if{f} $X\cup\hat{Y}$ is a model of $\pi(P)$, where $\hat{Y}$ is a set of new atoms for each atom in $Y$.
+Based on this result, the following proposition provides an approach to identify a strong reliable set of a DLP.
+
+\begin{proposition}\label{prop:new}
+  Let $P$ be a DLP and $U$ a set of atoms. $U$ is a strong reliable set of $P$ if and only if $\pi(P) \models \bigwedge U$ in propositional logic.
+\end{proposition}
+
+
+Though, it is difficult to verify whether a positive consequence $U$ is a strong or a weak reliable set of a program $P$, there are some easy cases as follows.
+
+\begin{proposition}
+  If $U$ is a positive consequence of a positive logic program $P$, then $U$ is a strong reliable set of $P$.
+\end{proposition}
+
+From Proposition~\ref{prop:new}, given a DLP $P$, we can compute a consequence $L$ by using efficient inference rules, like unit propagation, on the CNF form of $\pi(P)$. Then $L^+$ is a strong reliable set of $P$ and $L$ can be used to simplify the program~$P$.
+
+%\begin{proposition}\label{prop:new}
+%  If $U\subseteq X$ for every SE-model $(X, Y)$ of a DLP $P$, then $U$ is a strong reliable set of $P$.
+%\end{proposition}
+
+%Both propositions can be proved directly from the definition of the strong reliable set.
+
+%From~\cite{pearce2001encodings}, a DLP $P$ can be translated to a propositional formula $\pi(P)$, such that $(X, Y)$ is a SE-model of $P$ if{f} $X\cup\hat{Y}$ is a model of $\pi(P)$, where $\hat{Y}$ is a set of new atoms for each atom in $Y$.
+%Then we can compute such a set $U$ in Proposition~\ref{prop:new} from the formula $\pi(P)$ by using efficient inference rules, like unit propagation, which can later be used to simplify the program $P$.
+
+The notions of the strong and the weak reliable sets also provide a guideline to explore classes of positive consequence that could be used to simplify the program. We provide such an example in the next section.
+
+\section{Reliable Sets Under a Consequence}\label{sec:6}
+
+%As discussed in the previous section, notions of the strong and the weak reliable set can be used to simplify a logic program.
+%They specify sufficient and necessary conditions when a positive consequence $L$ satisfies conditions (ii) and (i) in Proposition~\ref{prop:wfm} respectively.
+%%for simplifying a logic program maintaining the strongly equivalent relation and the answer set equivalent relation respectively.
+%However, they cannot be identified efficiently.
+
+Guided by the definition of strong reliable sets, we introduce a sufficient condition for a consequence to simplify a logic program. We also provide an algorithm to identify the class of consequences specified by this sufficient condition.
+We show that for some programs, the consequence in the class is larger than the well-founded model.
+
+
+%these notions under a consequence of the program, which can be used to simplify the program and can be computed efficiently.
+
+%propose notions of the strong and the weak reliable set under a consequence of the program, which approximate the strong and the weak reliable set respectively. We show that, both notions can be used to simplify the program and can be computed efficiently.
+
+
+%Given a DLP $P$ and a consistent set $L$ of literals, a set $U$ of atoms is a
+%{\em strong reliable set} of $P$ {\em under} $L$, if for every nonempty subset $E$ of $U$, there exists a rule $r\in R^-(E, P)$ such that $head(r)\setminus L^- \subseteq E$ and $U\cup (L\setminus L^+)\models body(r)$.
+%$U$ is a {\em weak reliable set} of $P$ {\em under}x $L$, if for every nonempty subset $E$ of $U$, there exists a rule $r\in R^-(E, P)$ such that $head(r)\setminus L^- \subseteq E$ and $U\cup L\models body(r)$.
+%Note that, $U$ is a reliable set of $P$ if{f} $U$ is a strong reliable set of $P$ under $\emptyset$ if{f} $U$ is a weak reliable set of $P$ under $\emptyset$.
+
+Given a DLP $P$ and a consistent set $L$ of literals, a set $U$ of atoms is a
+{\em reliable set} of $P$ {\em under} $L$, if for every nonempty subset $E$ of $U$, there exists a rule $r\in R^-(E, P)$ such that $head(r)\setminus L^- \subseteq E$ and $U\cup (L\setminus L^+)\models body(r)$.
+
+
+
+Let $L$ be a consequence of a DLP $P$. A reliable set of $P$ under $L$ is also a strong (resp. weak) reliable set of a DLP constructed from $P$ and $L$.
+\begin{proposition}\label{prop:x}
+  Let $P$ be a DLP, $U$ a set of atoms, and $L$ a consequence of $P$.
+ If $U$ is a reliable set of $P$ under $L$, then $U$ is a strong and a weak reliable set of the program:
+    \[
+    P\cup \{\gets \Not p\mid p\in L\}\cup \{\gets p\mid \neg p\in L\}.
+    \]
+\end{proposition}
+\begin{proofs}
+  $U$ is a reliable set of $P$ under~$L$.
+  From the definition,
+  for any SE-model $(X, Y)$ of $P$ with $L^+\subseteq Y$ and $L^-\cap Y=\emptyset$ and any nonempty subset $E$ of $U$, if $U\setminus E \subseteq X$, then $E\cap X \neq\emptyset$. There is a finite number of atoms, then $U\subseteq X$. So there exists a rule $r\in R^-(E, P)$ such that $head(r)\cap X \subseteq E$, $body^+(r)\subseteq X\cup U$ and $body^-(r)\cap (Y\cup U) = \emptyset$. $U$ is a strong and a weak reliable set of the new program.
+%
+%  (2) $U$ is weak reliable set of $P$ under $L$.
+%  For any $U$-equilibrium model $(X, Y)$ of $P'$, $L^+\subseteq Y$, $L^-\cap Y=\emptyset$, $L^+\setminus U \subseteq X$.
+%  From the definition, for any $U$-equilibrium model $(X, Y)$ of $P'$ and any nonempty subset $E$ of $U$, if $U\setminus E \subseteq X$, then $E\cap X \neq\emptyset$. There is a finite number of atoms, then $U\subseteq X$.
+%  So there exists a rule $r\in R^-(E, P)$ such that $head(r) \cap X \subseteq E$,
+%  $body^+(r) \subseteq X\cup U$ and $body^-(r)\cap (Y\cup U) = \emptyset$. $U$ is a weak reliable set of~$P^*$.
+\end{proofs}
+
+From Proposition~\ref{prop:x}, Theorem~\ref{them:s} and~\ref{them:w}, the notion can be used to simplify a logic program.
+\begin{corollary}\label{corol:1}
+  Let $P$ be a DLP, $U$ a set of atoms, and $L$ a consequence of $P$. If $U$ is a reliable set $P$ under $L$, then
+  \begin{tight_enumerate1}
+    \item $P$ and $\trp(U)\cup \{p\gets \mid p\in U\}$ have the same set of answer sets.
+    \item $P\cup \{\gets \Not p\mid p\in L\} \cup \{\gets p\mid \neg p\in L\}$ is strongly equivalent to
+    \begin{multline*}
+   \trp(P, U) \cup \{p\gets \mid p\in U\}\\\cup \{\gets \Not p\mid p\in L\} \cup \{\gets p\mid \neg p\in L\}.
+   \end{multline*}
+  \end{tight_enumerate1}
+\end{corollary}
+
+The strongly equivalent relation mentioned in the previous corollary can be further specified in the following theorem.
+\begin{theorem}
+  Let $P$ be a DLP, $U$ a set of atoms, and $L$ a consistent set of literals.
+  \begin{multline*}
+  \{ r\mid r\in P,\, head(r)\setminus L^-\subseteq U\cup L^+\}\\\cup \{ \gets p\mid \neg p\in L\}\cup \{\gets \Not p\mid p\in L\}
+  \end{multline*}
+  is strongly equivalent to
+  \[
+  \{ p\gets\ \mid p\in U\}\cup \{ \gets p\mid \neg p\in L\}\cup \{\gets\Not p\mid p\in L\}
+  \]
+  if and only if $U$ is a reliable set of $P$ under $L$.
+\end{theorem}
+\begin{proofs}
+Let $P_1$, $P_2$ stand for these programs respectively.
+
+$\Leftarrow$: $U$ is a reliable set of $P$ under $L$ implies $U$ is a strong reliable set of $P_1$ under $L$.
+The direction can be proved from Corollary~\ref{corol:1}.
+
+$\Rightarrow$:
+Assume that $U$ is not a reliable set of $P$ under $L$, then there exists a nonempty subset $E$ of $U$ which prevents $U$ to be a strong reliable set of $P$ under $L$.
+It can be verified that $(U\cup L^+) \setminus E$ satisfies $P_1^{U\cup L^+}$, so $((U\cup L^+) \setminus E, U\cup L^+)$ is a SE-model of $P_1$, which conflicts to the fact it is not a SE-model of $P_2$.
+\end{proofs}
+
+
+\begin{proposition}
+  If $U_1$ and $U_2$ are reliable sets of a DLP $P$ under a consistent set $L$ of literals, then $U_1\cup U_2$ is also a reliable set of $P$ under~$L$.
+\end{proposition}
+Given a DLP $P$ and a consistent set $L$ of literals, there exists the greatest  reliable set of $P$ under $L$.
+We denote it by $\GRS(P, L)$, \ie, the union of all possible  reliable sets of $P$ under $L$.
+
+
+\setcounter{example}{0}
+\begin{example}[Continued]
+Recall that $L = \{a, f\}$ is a consequence of $P_1$. From the definition, $\GRS(P_1, L) = \emptyset$.
+$L' = \{\neg e\}$ is another consequence of $P_1$, and $\GRS(P_1, L') = \{ a, b, c, d, f\}$.
+\end{example}
+
+
+
+\begin{proposition}
+  Let $P$ be a DLP, $U$ a set of atoms, and $L$ a consequence of $P$.
+  \begin{tight_itemize}
+    \item Deciding whether $U$ is a reliable set of $P$ under $L$ is coNP-complete.
+    \item Deciding whether $U$ is equivalent to $\GRS(P, L)$  is coNP-hard.
+    \item Deciding whether an atom $p$ is in $\GRS(P, L)$  is coNP-hard.
+  \end{tight_itemize}
+\end{proposition}
+\begin{proofs}
+    The first item is a coNP problem, as we can guess a corresponding set $E$ which prevents $U$ to be a reliable set of $P$ under $L$.
+
+  In the proof of Proposition~\ref{prop:complex}, the set $U = \Atom(\mathcal{C})\cup \{t, e\}$ is a strong reliable set of $P$ if{f} $U$ is a reliable set of $P$ under $\emptyset$ if{f} $U = \GRS(P, \emptyset)$ if{f} $e\in \GRS(P, \emptyset)$.
+\end{proofs}
+
+
+When $P$ is an NLP, $\GRS(P, L)$ can be computed efficiently.
+In the following, we provide such a polynomial time algorithm, which can also be used to compute a subset of $\GRS(P, L)$ for a DLP $P$.
+
+
+%In the following, we provide approaches to compute $\GSRS(P, L)$ and $\GWRS(P, L)$.
+%We show that, although $\GSRS(P, L)$ and $\GWRS(P, L)$ are hard to be computed in the worst case, approximates of them can be computed efficiently.
+%Firstly, we provide polynomial time algorithms to compute $\GSRS(P, L)$ and $\GWRS(P, L)$ when $P$ is an NLP.
+
+Let $P$ be a DLP, $X$ a set of atoms and $L$ a set of literals.
+\begin{align*}
+T_{P, L}(X) = &\ \{p\mid \text{there is a rule $r\in P$ such that $p\in head(r)$,}\\
+  %&\ \hspace{.7cm} p\in head(r),\ p\notin body^+(r), \text{ and} \\
+  &\ \hspace{.2cm} (L\setminus L^+)\cup X\models body(r) \land \bigwedge_{q\in head(r)\setminus \{p\}} \neg q\}.
+%  T_{P,L}^w(X) =&\ \{ p\mid \text{there exists a rule $r\in P$ such that}\\
+%  &\ \hspace{.7cm} p\in head(r),\ p\notin body^+(r), \text{ and} \\
+%  &\ \hspace{.7cm} L\cup X\models body(r) \land \bigwedge_{q\in head(r)\setminus \{p\}} \neg q\}.
+\end{align*}
+$T_{P, L}$ is a monotonic operator. We use $T(P, L)$ to denote the least fixed point of $T_{P, L}$.
+
+%\begin{table*}[!t]
+%\caption{}\label{tab:tab1}
+%\centering
+%  \begin{tabular}{| l | r | r | r | r | r | r | r | r | r |}
+%    \hline
+%    \multirow{2}{*}{Benchmark} & \multirow{2}{*}{\#instants} & \multirow{2}{*}{\#atoms}  & \multirow{2}{*}{\#$\WFM$} & \multicolumn{2}{c|}{Consequence} & \multicolumn{2}{c|}{$\GRS^*$} & \multicolumn{2}{c|}{$\GRS$}\\
+%    \cline{5-10}
+%    & & & & size & time & size & time & size & time\\
+%    \hline
+%  \end{tabular}
+%\end{table*}
+
+
+\begin{proposition}\label{prop:last}
+  Let $P$ be an NLP and $L$ a consistent set of literals. $\GRS(P, L) = T(P, L)$.
+\end{proposition}
+\begin{proofs}
+  (1) If $U$ is a reliable set of $P$ under $L$, then $T_{P, L}(U)$ is also a reliable set of $P$ under $L$. So $T(P, L)\subseteq \GRS(P, L)$.
+
+  (2) If there is an atom $p\in U$, $U$ is a  reliable set of $P$ under $L$, and $p\notin T(P, L)$, then $U\setminus \{p\} \not\subseteq T(P, L)$. So $\GRS(P, L) \subseteq T(P, L)$.
+%
+%  Let $U$ be a strong reliable set of $P$ under $L$ and $E = (U\cup L^+)\setminus T^s(P, L)$. If $U \not\subseteq T^s(P, L)$ then $E\cap U \neq\emptyset$. From the definition, $(U\cup L^+)\setminus E \subseteq T^s(P, L)$ and there exists an atom $p$ and a rule $r\in R^-(E, P)$ such that $head(r)= \{p\}$, $p\in E$ and $p\in T^s(P, L)$, which conflicts to the condition that $E\cap T^s(P, L) = \emptyset$. So $U\subseteq T^s(P, L)$ and $\GSRS(P, L) \subseteq T^s(P, L)$.
+\end{proofs}
+
+Note that, $T(P, L)$ can be computed in polynomial time, then $\GRS(P, L)$ can be computed efficiently for NLPs.
+
+\begin{proposition}\label{prop:last1}
+  Let $P$ be a DLP and $L$ a consistent set of literals. $T(P, L) \subseteq \GRS(P, L)$.
+\end{proposition}
+
+We show that $\GRS(P, L)$ also extends the well-founded operator.
+\begin{proposition}
+  Let $P$ be a DLP, $L_1$ and $L_2$ be consistent sets of literals with $L_1 \subseteq L_2$. The following hold:
+  \begin{tight_itemize}
+  \item $\WFM(P)^+ \subseteq \GRS(P, \emptyset)$.
+  \item $\GRS(P, L_1) \subseteq \GRS(P, L_2)$.
+  \end{tight_itemize}
+\end{proposition}
+
+\begin{example}
+   Consider the DLP $P_2$:
+  \begin{align*}
+    a \lor b &\gets, &  a &\gets b, & b &\gets a.
+  \end{align*}
+  $\GRS(P_2, \emptyset) =\{a, b\}$, $T(P_2, \emptyset) = \emptyset$, and $\WFM(P_2) = \emptyset$.
+\end{example}
+
+%Note that, $T(P, L)$ can be used to approximate $\GRS(P, L)$, when $P$ is a DLP.
+
+We also provide an algorithm for computing $\GRS(P, L)$, when $P$ is a DLP.
+Given a DLP $P$, a set $X$ of atoms, and a set $L$ of literals, the operator $\RS_{P, L}(X)$ is defined in Algorithm~\ref{alg:1}.
+%Similarly, the operator $\RS^s_{P, L}(X)$ can be defined by replacing $X\cup L\models body(r)$ with $X\cup (L\setminus L^+)\models body(r)$ in Algorithm~\ref{alg:1}.
+Note that, $\RS_{P, L}(X)$ is monotonic. We use $\RS(P, L)$ to denote the least fixed points of the corresponding operators.
+
+\begin{algorithm}[ht]
+\caption{$\RS_{P, L}(X)$}\label{alg:1}
+$A := X$;\\
+$H := \{ head(r)\setminus L^- \mid r\in P,\ head(r)\cap body^+(r) = \emptyset,$\\ \hspace{1cm} $X\cap head(r) = \emptyset$, and $X\cup (L\setminus L^+)\models body(r)\}$;\\
+\For{each $C\in H$}
+{
+\If{$\left|C\right| = 1$ \textbf{or}\\ \hspace{.3cm} for each $p\in C$, $C \subseteq \RS_{P, L}(X\cup \{p\})$}
+{
+    $A := A\cup C$;
+}
+}
+\Return{$A$}
+\end{algorithm}
+\vspace{-.3cm}
+
+
+\begin{proposition}
+  Let $P$ be a DLP and $L$ a consistent set of literals. $\GRS(P, L) = \RS(P, L)$.
+\end{proposition}
+\begin{proofs}
+The proof is similar to the proof for Proposition~\ref{prop:last}. Additionally with the fact that, if $C\not\subseteq \RS_{P, L}(X\cup \{p\})$ for some $p\in C$, then for the set $E = C\setminus \{p\}$, there does not exist a corresponding rule $r\in R^-(E, P)$, which prevents $C\cup X$ to be a reliable set of $P$ under $L$.
+\end{proofs}
+
+%Note that, $\RS^s(P, \emptyset) = \RS^w(P, \emptyset) = \GRS(P)$.
+
+
+Now we compare the reliable set under a consequence of a program with the results computed from the well-founded operator.
+
+
+Given a logic program $P$, we can preprocess $P$ by the grounding engine gringo~\cite{gebser2007gringo} (or lparse) and receive the simplified program $P'$. In specific, $P'$ is consisted from two parts $P^*$ and $R$, where no atoms in $\WFM(P)$ occurring in $P^*$ and $R = \{ p\gets \mid p\in \WFM(P)\}$.
+We can compute a consequence of $P^*$ by applying unit propagation to the set of clauses obtained from the rules in $P^*$. For example, let $P^* = \{ p \lor q \gets, \ q \gets \Not r, \ \gets r\}$, the corresponding set of clauses is $\{ p\lor q, \, q \lor r,\, \neg r\}$, and the consequence computed by applying unit propagation is $\{\neg r, q\}$.
+Based on such consequence~$L$, we can compute $T(P^*, L)$. From Proposition~\ref{prop:last} and~\ref{prop:last1}, it is equal to $\GRS(P^*, L)$ if $P^*$ is an NLP; it is a subset of $\GRS(P^*, L)$ if $P^*$ is a DLP. In the following, for the program $P'$ grounded by gringo, we use $\GRS^*$ to denote such $T(P^*, L)$.% and $\GRS$ to denote $\RS(P^*, L)$.
+
+%We have implemented both programs to compute $\GRS^*$ and $\GRS$ for NLPs and DLPs grounded by gringo (version ...).
+%Table~\ref{tab:tab1} contains average sizes of consequences, $\GRS^*$, and $\GRS$ for different instances from 10 classes of NLPs and 4 classes of DLPs, and average times for computing these notions\footnote{The experiments were done on an ..... For more information, please visit the website.}. These benchmarks were frequently used to compare the performance of ASP solvers~\cite{}. If a class's name contains ``(NLP)'' (resp. ``(DLP)'') then instances in the class are NLPs (resp. DLPs).
+%In the table, a number under ``\#atoms'' denotes the average number of atoms in the programs grounded from instants in the class, and a number under ``\#$\WFM$'' denotes the average number of facts in these programs.
+
+We have implemented a program to compute $\GRS^*$ for programs grounded by gringo (version 4.4.0).
+Table~\ref{tab:tab1} contains average sizes of consequences and $\GRS^*$ of $P^*$ for different instances from 3 classes of NLPs and 2 classes of DLPs, and average times for computing these notions\footnote{%The experiments were done on an on a Linux machine with AMD A10-5800K (3.8GHz) CPU and 3.3GB RAM. The times are in CPU seconds as reported by Linux ``usr/bin/time'' command.
+For more information, please visit the website.}. These benchmarks were frequently used to compare the performance of ASP solvers~\cite{denecker2009second,gebser2013advanced}. If a class's name contains ``(N)'' (resp. ``(D)'') then instances in the class are NLPs (resp. DLPs).
+In the table, a number under ``\#ins'' denotes the number of instances in the corresponding class, and 
+ a number under ``\#WFM'' denotes the average number of facts in grounded programs, which is also the size of positive consequence in $\WFM(P')$.
+
+
+\begin{table}[htp]
+\caption{Comparing $\WFM$ and $\GRS^*$}\label{tab:tab1}
+\centering
+{\scriptsize
+  \begin{tabular}{|l|r|r|r|r|r|r|}
+    \hline
+    \multirow{2}{*}{Benchmark} & \multirow{2}{*}{\#ins} & \multirow{2}{*}{\#WFM} & \multicolumn{2}{c|}{Consequence} & \multicolumn{2}{c|}{$\GRS^*$}\\
+    \cline{4-7}
+    & & & size & time(s) & size & time(s) \\
+    \hline
+    15-Puzzle(N)	&9	&85	&1452	&1379.27	&0	&5.96 \\
+    Factoring(N)                        &5    &0    &2805  &435.82              &148  &23.49\\
+    SchurNumbers(N) & 5 & 48 & 284 & 46.60 & 91 & 0.74\\
+    Mutex(D)                            &7    &3224    &2933   &128.10           &0  &0.01\\
+    RQBF(D)  &15   &80      &11     &0.10             &0   &0.00 \\
+    \hline
+  \end{tabular}}
+\end{table}
+
+The result shows that for some programs in benchmarks, $\GRS^*$ is larger than the results computed from the well-founded operator. Note that, the performance could be improved when a larger consequence is considered.
+We have also implemented a program for Algorithm~\ref{alg:1} to compute $\GRS(P, L)$ for DLPs. However, the program requires a long running time and returns nothing more than $\GRS^*$ for benchmarks.
+
+
+
+
+
+
+\begin{comment}
+Given a logic program $P$, we can preprocess $P$ by the grounding engine gringo~\cite{gebser2007gringo} (or lparse) and receive the simplified program $P'$. In specific, $P'$ is consisted from two parts $P^*$ and $R$, where no atoms in $\WFM(P)$ occurring in $P^*$ and $R = \{ p\gets \mid p\in \WFM(P)\}$.
+We can compute a consequence of $P^*$ by applying unit propagation to the set of clauses obtained from the rules in $P^*$. For example, let $P^* = \{ p \lor q \gets, \ q \gets r, \ \gets \Not r\}$, the corresponding set of clauses is $\{ p\lor q, \, q \lor \neg r,\, r\}$, and the consequence computed by applying unit propagation is $\{r, q\}$.
+Based on such consequence~$L$, we can compute $T^w(P^*, L)$ and $T^s(P^*, L)$ efficiently. From Proposition~\ref{prop:last} and~\ref{prop:last1}, they are equal to $\GWRS(P^*, L)$ and $\GSRS(P^*, L)$ if $P^*$ is an NLP; they approximate $\GWRS(P^*, L)$ and $\GSRS(P^*, L)$ if $P^*$ is a DLP. In the following, for the program $P'$ grounded by gringo, we use $\GWRS^*$ and $\GSRS^*$ to denote such $T^w(P^*, L)$ and $T^s(P^*, L)$ respectively.
+
+We have implemented both programs to compute $\GWRS^*$ and $\GSRS^*$ for NLPs and DLPs grounded by gringo (version ...).
+Table~\ref{tab:tab1} contains average sizes of consequences, $\GWRS^*$, and $\GSRS^*$ for different instances from 10 classes of NLPs and 4 classes of DLPs, and average times for computing these notions\footnote{The experiments were done on an ..... For more information, please visit the website.}. These benchmarks were frequently used to compare the performance of ASP solvers~\cite{}. If a class's name contains ``(NLP)'' (resp. ``(DLP)'') then instances in the class are NLPs (resp. DLPs).
+In the table, a number under ``\#atoms'' denotes the average number of atoms in the programs grounded from instants in the class, and a number under ``\#$\WFM$'' denotes the average number of facts in these programs.
+
+The result shows that for many programs in the benchmarks, $\GWRS^*$ and $\GSRS^*$ are larger than the results computed from the well-founded operator. The performance can be even improved when a larger consequence is considered.
+We have also implemented programs for Algorithm~\ref{alg:1} to compute $\GWRS(P, L)$ and $\GSRS(P, L)$ for DLPs. However, both programs require a longer running time and return nothing more than $\GWRS^*$ and $\GSRS^*$.
+
+
+
+
+\begin{table*}[t]
+\caption{}\label{tab:tab1}
+  \begin{tabular}{| l | r | r | r | r | r | r | r | r | r |}
+    \hline
+    \multirow{2}{*}{Benchmark} & \multirow{2}{*}{\#instants} & \multirow{2}{*}{\#atoms}  & \multirow{2}{*}{\#$\WFM$} & \multicolumn{2}{c|}{Consequence} & \multicolumn{2}{c|}{$\GWRS^*$} & \multicolumn{2}{c|}{$\GSRS^*$}\\
+    \cline{5-10}
+    & & & & size & time & size & time & size & time\\
+    \hline\\
+  \end{tabular}
+\end{table*}
+\end{comment}
+
+\begin{comment}
+\vspace{-3pt}
+\begin{table*}[htb]
+\caption{Comparison between WFM, GWRS, GSRS in NLP}\label{tab:1}
+\centering
+{\small
+\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|}
+\hline
+%\multirow{2}{*}{Problem} & \multicolumn{2}{c|}{Elementary Loops} & \multicolumn{2}{c|}{Proper Loops}\\
+%\cline{2-5}
+Benchmark       & number	    &    N$_{a}$	& T$_{c}$          &	T$_{c'}$   & N$_W$	       & T$_{GWRS}$	   & N$_{GWRS}$	& T$_{GSRS}$ 	& N$_{GSRS}$\\
+\hline
+15-Puzzle	&9	&5005	&1379.273	&1537.333	&85	&12.924	&22.333	&5.96	&0 \\
+Factoring	&5	&4963.6	&435.824	&2805.2	&0	&10.4	&156	&23.488	&147.6  \\
+channelRouting	&7	&4385.86	&472.785	&2359.57	&2305.571	&35.377	&0	&0.066	&0 \\
+EqTest	&5	&433	&4.248	&22	&20	&0.044	&0	&0.016	&0\\
+HamiltonianPath	&14	&1532.14	&42.397	&680	&553.786	&0.206	&0	&0.001	&0\\
+labyrinth	&6	&10647.33	&536.072	&1077.333	&1074.333	&19.747	&1	&0.15	&1\\
+RandomNonTight	&14	&53.57	&0.07	&0.571	&0	&0.003	&0	&0.001	&0\\
+RLP-150	&14	&149.71	&0.103	&0	&0	&0.004	&0	&0	&0\\
+RLP-200&	14	&199.57	&0.18	&0.071	&0	&0.001	&0	&0.001	&0\\
+SchurNumbers	&5	&735	&46.6	&332	&48	&0.716	&91	&0.736	&91\\
+\hline
+\end{tabular}}
+%\vspace{-14pt}
+\end{table*}
+
+%\vspace{-3pt}
+\begin{table*}[htb]
+\caption{Comparison between WFM, GWRS, GSRS in DLP}\label{tab:1}
+\centering
+{\small
+\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|}
+\hline
+%\multirow{2}{*}{Problem} & \multicolumn{2}{c|}{Elementary Loops} & \multicolumn{2}{c|}{Proper Loops}\\
+%\cline{2-5}
+Benchmark       & number	    &    N$_{a}$	& T$_{c}$          &	T$_{c'}$   & N$_W$	       & T$_{GWRS}$	   & N$_{GWRS}$	& T$_{GSRS}$ 	& N$_{GSRS}$\\
+\hline
+Hampath	&15	&170.067	&0.275	&71.467	&65.4	&0.009	&0	&0.001	&0 \\
+Mutex	&7	&6449	&128.103	&6158.714	&3224	&61.451	&6158.714	&0.006	&0\\
+RandomQuantifiedBooleanFormulas	&15	&160.067	&0.072	&91.4	&79.533	&0.024	&90.4	&0.001	&0\\
+StrategicCompanies	&15	&2002	&6.917	&1861	&2288	&0.713	&0	&0	&0\\
+\hline
+\end{tabular}}
+\vspace{-14pt}
+\end{table*}
+\end{comment}
+
+
+\section{Conclusion}
+
+In this paper, we consider when a consequence of a logic program can be used to simplify a logic program so that the resulting program would no longer contain variables in the consequence and the answer sets can be constructed from the answer sets of the resulting program.
+We introduce notions of the strong and the weak reliable set of a program. We show that, a consequence can simplify a logic program if and only if it is a weak reliable set. Moreover, the simplified program with rules constructed from the consequence is strongly equivalent to the original program if and only if the consequence is a strong reliable set.
+We explore the computational complexities on identifying a strong or a weak reliable set and provide an approach to verify a strong reliable set.
+These notions provide a guideline to explore classes of consequences that could be used to simplify a logic program. As an application, we introduce the notion of the reliable set under a consequence of a program, which extends the well-founded model and provides a sufficient condition for a consequence to simplify a logic program. We also provide an algorithm to compute the notion.
+
+%% The file named.bst is a bibliography style file for BibTeX 0.99c
+\bibliographystyle{named}
+\bibliography{ref}
+
+\end{document}
+

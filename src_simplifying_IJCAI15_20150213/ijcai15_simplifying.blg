@@ -1,0 +1,17 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: ijcai15_simplifying.aux
+The style file: named.bst
+Database file #1: ref.bib
+Repeated entry---line 161 of file ref.bib
+ : @article{turner2003strong
+ :                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 195 of file ref.bib
+ : @article{van1991well
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 306 of file ref.bib
+ :  @incollection{clark78
+ :                       ,
+I'm skipping whatever remains of this entry
+Warning--empty journal in syrjanen2000lparse
+(There were 3 error messages)
